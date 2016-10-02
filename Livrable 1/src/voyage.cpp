@@ -7,9 +7,10 @@
  */
 
 #include "voyage.h"
+#include <algorithm>
 
 Voyage::Voyage(const std::vector<std::string>& ligne_gtfs, Ligne* p_ligne)
-: m_id(ligne_gtfs[2]), m_service_id(ligne_gtfs[1]), m_destination(ligne_gtfs[3]), m_ligne(p_ligne)
+: m_id(ligne_gtfs[0]), m_service_id(ligne_gtfs[1]), m_destination(ligne_gtfs[2]), m_ligne(p_ligne)
 {
 }
 
@@ -17,13 +18,13 @@ Arret & Voyage::arretDeLaStation(unsigned int p_num_station)
 {
 	for (unsigned int i = 0; i < m_arrets.size(); i++)
 	{
-		if (m_arrets[i].m_station_id == p_num_station)
+		if (m_arrets[i].getStationId() == p_num_station)
 		{
 			return m_arrets[i];
 		}
 	}
 
-	throw ("Numéro de sation invalide.")
+	throw ("Numéro de sation invalide.");
 }
 
 std::vector<Arret> Voyage::getArrets() const
@@ -97,7 +98,15 @@ Heure Voyage::getHeureFin() const
 
 void Voyage::setArrets(std::vector<Arret>& resultat)
 {
-	// trier et ajouter 30 sec
+	sort(resultat.begin(), resultat.end());
+	for (unsigned int i = 0; i < resultat.size() - 1; i++)
+	{
+		if (resultat[i].getHeureArrivee() == resultat[i+1].getHeureArrivee())
+		{
+			resultat[i+1].getHeureArrivee().add_secondes(30);
+			resultat[i+1].getHeureDepart().add_secondes(30);
+		}
+	}
 	m_arrets = resultat;
 }
 

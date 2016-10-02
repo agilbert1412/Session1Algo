@@ -11,8 +11,8 @@
 
 
 Ligne::Ligne(const std::vector<std::string> & ligne_gtfs)
-: m_id(std::stoi(ligne_gtfs[0])), m_numero(ligne_gtfs[2]), m_description(ligne_gtfs[4]),
-  m_categorie(couleurToCategorie(ligne_gtfs[8])), m_voyages()
+: m_id(std::stoi(ligne_gtfs[0])), m_numero(ligne_gtfs[1]), m_description(ligne_gtfs[2]),
+  m_categorie(couleurToCategorie(ligne_gtfs[3])), m_voyages()
 {
 }
 
