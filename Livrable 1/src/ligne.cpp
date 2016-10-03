@@ -12,12 +12,10 @@
 
 Ligne::Ligne(const std::vector<std::string> & ligne_gtfs)
 : m_id(std::stoi(ligne_gtfs[0])), m_numero(ligne_gtfs[1]), m_description(ligne_gtfs[2]),
-  m_categorie(couleurToCategorie(ligne_gtfs[3])), m_voyages()
-{
+  m_categorie(couleurToCategorie(ligne_gtfs[3])), m_voyages(){
 }
 
-CategorieBus Ligne::couleurToCategorie(std::string couleur)
-{
+CategorieBus Ligne::couleurToCategorie(std::string couleur){
 	if (couleur == "97BF0D")
 	{
 		return CategorieBus::METRO_BUS;
@@ -40,18 +38,15 @@ CategorieBus Ligne::couleurToCategorie(std::string couleur)
 	}
 }
 
-CategorieBus Ligne::getCategorie() const
-{
+CategorieBus Ligne::getCategorie() const{
 	return m_categorie;
 }
 
-void Ligne::setCategorie(CategorieBus categorie)
-{
+void Ligne::setCategorie(CategorieBus categorie){
 	m_categorie = categorie;
 }
 
-std::pair<std::string, std::string> Ligne::getDestinations() const
-{
+std::pair<std::string, std::string> Ligne::getDestinations() const{
 	int index = m_description.find('-');
 	std::pair<std::string,std::string> destinations;
 
@@ -63,52 +58,42 @@ std::pair<std::string, std::string> Ligne::getDestinations() const
 	return destinations;
 }
 
-unsigned int Ligne::getId() const
-{
+unsigned int Ligne::getId() const{
 	return m_id;
 }
 
-void Ligne::setId(unsigned int id)
-{
+void Ligne::setId(unsigned int id){
 	m_id = id;
 }
 
-const std::string& Ligne::getNumero() const
-{
+const std::string& Ligne::getNumero() const{
 	return m_numero;
 }
 
-void Ligne::setNumero(const std::string& numero)
-{
+void Ligne::setNumero(const std::string& numero){
 	m_numero = numero;
 }
 
-const std::vector<Voyage*>& Ligne::getVoyages() const
-{
+const std::vector<Voyage*>& Ligne::getVoyages() const{
 	return m_voyages;
 }
 
-void Ligne::setVoyages(const std::vector<Voyage*>& voyages)
-{
+void Ligne::setVoyages(const std::vector<Voyage*>& voyages){
 	m_voyages = voyages;
 }
 
-void Ligne::addVoyage(Voyage* ptr_voyage)
-{
+void Ligne::addVoyage(Voyage* ptr_voyage){
 	m_voyages.push_back(ptr_voyage);
 }
 
-const std::string& Ligne::getDescription() const
-{
+const std::string& Ligne::getDescription() const{
 	return m_description;
 }
 
-void Ligne::setDescription(const std::string& description)
-{
+void Ligne::setDescription(const std::string& description){
 	m_description = description;
 }
 
-std::ostream& operator <<(std::ostream& f, const Ligne& p_ligne)
-{
+std::ostream& operator <<(std::ostream& f, const Ligne& p_ligne){
 	return f << "ID: " << p_ligne.getId() << " Numéro: " << p_ligne.getNumero();
 }

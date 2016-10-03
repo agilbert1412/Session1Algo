@@ -17,8 +17,7 @@ const int EarthRadius = 6371;
 const double piDivBy180 = 0.017453292519943295; // Math.PI / 180
 
 
-Coordonnees::Coordonnees(double latitude, double longitude)
-{
+Coordonnees::Coordonnees(double latitude, double longitude){
   if (is_valide_coord(latitude, longitude))
   {
 	  m_latitude = latitude;
@@ -30,13 +29,11 @@ Coordonnees::Coordonnees(double latitude, double longitude)
   }
 }
 
-double Coordonnees::getLatitude() const
-{
+double Coordonnees::getLatitude() const{
 	return m_latitude;
 }
 
-void Coordonnees::setLatitude(double latitude)
-{
+void Coordonnees::setLatitude(double latitude){
 	if (latitude >= MinLatitude && latitude <= MaxLatitude)
 	{
 		m_latitude = latitude;
@@ -47,13 +44,11 @@ void Coordonnees::setLatitude(double latitude)
 	}
 }
 
-double Coordonnees::getLongitude() const
-{
+double Coordonnees::getLongitude() const{
 	return m_longitude;
 }
 
-void Coordonnees::setLongitude(double longitude)
-{
+void Coordonnees::setLongitude(double longitude){
 	if (longitude >= Minlongitude && longitude <= Maxlongitude)
 	{
 		m_longitude = longitude;
@@ -64,14 +59,12 @@ void Coordonnees::setLongitude(double longitude)
 	}
 }
 
-bool Coordonnees::is_valide_coord(double p_latitude, double p_longitude)
-{
+bool Coordonnees::is_valide_coord(double p_latitude, double p_longitude){
   return (p_latitude >= MinLatitude && p_latitude <= MaxLatitude &&
 		  p_longitude >= Minlongitude && p_longitude >= Maxlongitude);
 }
 
-double Coordonnees::operator-(const Coordonnees & other) const
-{
+double Coordonnees::operator-(const Coordonnees & other) const{
 	double lat1Rad = m_latitude * piDivBy180;
 	double lat2Rad = other.m_latitude * piDivBy180;
 
@@ -83,7 +76,6 @@ double Coordonnees::operator-(const Coordonnees & other) const
     return angle * EarthRadius;
 }
 
-std::ostream & operator<<(std::ostream & flux, const Coordonnees & p_coord)
-{
+std::ostream & operator<<(std::ostream & flux, const Coordonnees & p_coord){
 	return flux << "Lattitude: " << p_coord.getLatitude() << " Longitude: " << p_coord.getLongitude();
 }
