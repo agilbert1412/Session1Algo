@@ -85,5 +85,5 @@ double Coordonnees::operator-(const Coordonnees & other) const
 
 std::ostream & operator<<(std::ostream & flux, const Coordonnees & p_coord)
 {
-	return flux << "Lattitude: " << p_coord.getLatitude() << " Longitude: " << p_coord.getLongitude();
+	return flux << "Latitude: " << p_coord.getLatitude() << " Longitude: " << p_coord.getLongitude();
 }

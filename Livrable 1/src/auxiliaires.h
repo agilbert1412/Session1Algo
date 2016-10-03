@@ -38,7 +38,9 @@ void lireFichier(std::string nomFichier, std::vector<std::vector<std::string>>& 
  * \brief Cette classe représente une date.
  */
 class Date {
+
 public:
+
 	Date();
 	Date(unsigned int an, unsigned int mois, unsigned int jour);
 	bool operator== (const Date & other) const;

@@ -6,6 +6,7 @@
 CPP_SRCS += \
 ../src/Livrable\ 1.cpp \
 ../src/arret.cpp \
+../src/auxiliaires.cpp \
 ../src/coordonnees.cpp \
 ../src/ligne.cpp \
 ../src/station.cpp \
@@ -14,6 +15,7 @@ CPP_SRCS += \
 OBJS += \
 ./src/Livrable\ 1.o \
 ./src/arret.o \
+./src/auxiliaires.o \
 ./src/coordonnees.o \
 ./src/ligne.o \
 ./src/station.o \
@@ -22,6 +24,7 @@ OBJS += \
 CPP_DEPS += \
 ./src/Livrable\ 1.d \
 ./src/arret.d \
+./src/auxiliaires.d \
 ./src/coordonnees.d \
 ./src/ligne.d \
 ./src/station.d \
