@@ -61,7 +61,7 @@ void Coordonnees::setLongitude(double longitude){
 
 bool Coordonnees::is_valide_coord(double p_latitude, double p_longitude){
   return (p_latitude >= MinLatitude && p_latitude <= MaxLatitude &&
-		  p_longitude >= Minlongitude && p_longitude >= Maxlongitude);
+		  p_longitude >= Minlongitude && p_longitude <= Maxlongitude);
 }
 
 double Coordonnees::operator-(const Coordonnees & other) const{

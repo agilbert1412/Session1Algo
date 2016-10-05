@@ -54,13 +54,6 @@ void lireFichier(string nomFichier, vector<vector<string>>& resultats, char deli
 		resultats.emplace_back();
 	    vector<string>& rangee = resultats.back();
 	    rangee = split(ligne, delimiteur);
-//	    rangee.reserve(1000); // On aura pas plus de 1000 elements par ligne (?)
-//	    istringstream buffer(ligne);
-//	    string element;
-//	    while (buffer >> element)
-//	    {
-//	    	rangee.push_back(element);
-//	    }
 	}
 }
 

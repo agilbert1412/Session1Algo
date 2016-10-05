@@ -9,10 +9,10 @@
 #include "arret.h"
 
 Arret::Arret(const std::vector<std::string>& ligne_gtfs)
-: m_station_id(std::stoi(ligne_gtfs[0])),
-  m_heure_arrivee(std::stoi(ligne_gtfs[1].substr(0,2)), std::stoi(ligne_gtfs[1].substr(3,2)), std::stoi(ligne_gtfs[1].substr(6,2))),
-  m_heure_depart(std::stoi(ligne_gtfs[2].substr(0,2)), std::stoi(ligne_gtfs[2].substr(3,2)), std::stoi(ligne_gtfs[2].substr(6,2))),
-  m_numero_sequence(std::stoi(ligne_gtfs[3])), m_voyage_id(ligne_gtfs[4]){
+: m_station_id(std::stoul(ligne_gtfs[3])),
+  m_heure_arrivee(std::stoul(ligne_gtfs[1].substr(0,2)), std::stoul(ligne_gtfs[1].substr(3,2)), std::stoul(ligne_gtfs[1].substr(6,2))),
+  m_heure_depart(std::stoul(ligne_gtfs[2].substr(0,2)), std::stoul(ligne_gtfs[2].substr(3,2)), std::stoul(ligne_gtfs[2].substr(6,2))),
+  m_numero_sequence(std::stoul(ligne_gtfs[4])), m_voyage_id(ligne_gtfs[0]){
 }
 
 const Heure& Arret::getHeureArrivee() const{

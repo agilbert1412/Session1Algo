@@ -9,13 +9,13 @@
 #include "station.h"
 
 Station::Station(const std::vector<std::string>& ligne_gtfs)
-: m_id(std::stoi(ligne_gtfs[0])), m_nom(ligne_gtfs[1]), m_description(ligne_gtfs[2]),
+: m_id(std::stoul(ligne_gtfs[0])), m_nom(ligne_gtfs[1]), m_description(ligne_gtfs[2]),
   m_coords(std::stod(ligne_gtfs[3]), std::stod(ligne_gtfs[4])), m_voyages_passants(){
 
 }
 
 std::ostream & operator<<(std::ostream & flux, const Station & p_station){
-	return flux << p_station.getNom();
+	return flux << p_station.getId() << " " <<  p_station.getNom() << "\n";
 }
 
 const Coordonnees & Station::getCoords() const{

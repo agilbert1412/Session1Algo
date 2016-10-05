@@ -10,7 +10,7 @@
 #include <algorithm>
 
 Voyage::Voyage(const std::vector<std::string>& ligne_gtfs, Ligne* p_ligne)
-: m_id(ligne_gtfs[0]), m_service_id(ligne_gtfs[1]), m_destination(ligne_gtfs[2]), m_ligne(p_ligne){
+: m_id(ligne_gtfs[2]), m_service_id(ligne_gtfs[1]), m_destination(ligne_gtfs[3]), m_ligne(p_ligne){
 }
 
 Arret & Voyage::arretDeLaStation(unsigned int p_num_station){
@@ -84,16 +84,22 @@ Heure Voyage::getHeureFin() const{
 }
 
 void Voyage::setArrets(std::vector<Arret>& resultat){
-	sort(resultat.begin(), resultat.end());
-	for (unsigned int i = 0; i < resultat.size() - 1; i++)
+
+	std::vector<Arret> Arrets;
+
+	for (unsigned int i = 0; i < resultat.size(); i++)
 	{
-		if (resultat[i].getHeureArrivee() == resultat[i+1].getHeureArrivee())
+		if (resultat[i].getVoyageId() == this->getId())
 		{
-			resultat[i+1].getHeureArrivee().add_secondes(30);
-			resultat[i+1].getHeureDepart().add_secondes(30);
+			Arrets.push_back(resultat[i]);
+			if (Arrets.size() > 1 && Arrets.end()[-1].getHeureArrivee() == Arrets.end()[-2].getHeureArrivee())
+			{
+				Arrets.end()[-1].setHeureArrivee(Arrets.end()[-1].getHeureArrivee().add_secondes(30));
+				Arrets.end()[-1].setHeureDepart(Arrets.end()[-1].getHeureDepart().add_secondes(30));
+			}
 		}
 	}
-	m_arrets = resultat;
+	m_arrets = Arrets;
 }
 
 bool Voyage::operator< (const Voyage & p_other) const{
@@ -107,7 +113,7 @@ bool Voyage::operator> (const Voyage & p_other) const{
 }
 
 std::ostream & operator<<(std::ostream & flux, const Voyage & p_voyage){
-	return flux << "ID: " << p_voyage.getId();
+	return flux << p_voyage.getHeureDepart() << " - " <<  p_voyage.getDestination() << "\n";
 
 }
 

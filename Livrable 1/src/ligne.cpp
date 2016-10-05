@@ -11,8 +11,8 @@
 
 
 Ligne::Ligne(const std::vector<std::string> & ligne_gtfs)
-: m_id(std::stoi(ligne_gtfs[0])), m_numero(ligne_gtfs[1]), m_description(ligne_gtfs[2]),
-  m_categorie(couleurToCategorie(ligne_gtfs[3])), m_voyages(){
+: m_id(std::stoul(ligne_gtfs[0])), m_numero(ligne_gtfs[2]), m_description(ligne_gtfs[4]),
+  m_categorie(couleurToCategorie(ligne_gtfs[7])), m_voyages(){
 }
 
 CategorieBus Ligne::couleurToCategorie(std::string couleur){
@@ -95,5 +95,6 @@ void Ligne::setDescription(const std::string& description){
 }
 
 std::ostream& operator <<(std::ostream& f, const Ligne& p_ligne){
-	return f << "ID: " << p_ligne.getId() << " Numéro: " << p_ligne.getNumero();
+	return f << "LEBUS " <<  p_ligne.getNumero() << " " <<  p_ligne.getDestinations().first
+					+  p_ligne.getDestinations().second << "\n";
 }
