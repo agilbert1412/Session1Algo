@@ -85,18 +85,17 @@ Heure Voyage::getHeureFin() const{
 
 void Voyage::setArrets(std::vector<Arret>& resultat){
 
-	std::vector<Arret> Arrets;
+	sort(resultat.begin(), resultat.end());
 
 	for (unsigned int i = 0; i < resultat.size(); i++)
 	{
-		Arrets.push_back(resultat[i]);
-		if (Arrets.size() > 1 && Arrets.end()[-1].getHeureArrivee() == Arrets.end()[-2].getHeureArrivee())
-		{
-			Arrets.end()[-1].setHeureArrivee(Arrets.end()[-1].getHeureArrivee().add_secondes(30));
-			Arrets.end()[-1].setHeureDepart(Arrets.end()[-1].getHeureDepart().add_secondes(30));
+		if (resultat.size() > 1 && resultat.end()[-1].getHeureArrivee() == resultat.end()[-2].getHeureArrivee())
+			{
+			resultat.end()[-1].setHeureArrivee(resultat.end()[-1].getHeureArrivee().add_secondes(30));
+			resultat.end()[-1].setHeureDepart(resultat.end()[-1].getHeureDepart().add_secondes(30));
 		}
 	}
-	m_arrets = Arrets;
+	m_arrets = resultat;
 }
 
 bool Voyage::operator< (const Voyage & p_other) const{

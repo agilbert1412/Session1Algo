@@ -44,6 +44,7 @@ string TrouverNomRepertoire(const string& cheminFichier)
 int main(int argc, char *argv[]) {
 
 	string repertoireDossierRTC = TrouverNomRepertoire(argv[0]) + "/RTC/";
+	//string repertoireDossierRTC = "/home/etudiant/Bureau/RTC";
 	clock_t clkStart;
 	clock_t clkEnd;
 	clock_t clk1;
