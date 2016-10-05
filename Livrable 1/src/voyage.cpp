@@ -86,6 +86,7 @@ Heure Voyage::getHeureFin() const{
 void Voyage::setArrets(std::vector<Arret>& resultat){
 
 	std::vector<Arret> Arrets;
+	std::vector<Arret> resultatNew;
 
 	for (unsigned int i = 0; i < resultat.size(); i++)
 	{
@@ -98,8 +99,13 @@ void Voyage::setArrets(std::vector<Arret>& resultat){
 				Arrets.end()[-1].setHeureDepart(Arrets.end()[-1].getHeureDepart().add_secondes(30));
 			}
 		}
+		else
+		{
+			resultatNew.push_back(resultat[i]);
+		}
 	}
 	m_arrets = Arrets;
+	resultat = resultatNew;
 }
 
 bool Voyage::operator< (const Voyage & p_other) const{
@@ -113,7 +119,7 @@ bool Voyage::operator> (const Voyage & p_other) const{
 }
 
 std::ostream & operator<<(std::ostream & flux, const Voyage & p_voyage){
-	return flux << p_voyage.getHeureDepart() << " - " <<  p_voyage.getDestination() << "\n";
+	return flux << p_voyage.getHeureDepart() << " - " <<  p_voyage.getDestination();
 
 }
 

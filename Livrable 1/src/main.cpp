@@ -22,7 +22,6 @@
 
 using namespace std;
 
-const string directoryFilesPath = "/home/etudiant/Bureau/RTC";
 const string agencyFile = "/agency.txt";
 const string calendarDatesFile = "/calendar_dates.txt";
 const string routesFile = "/routes.txt";
@@ -31,12 +30,42 @@ const string stopsFile = "/stops.txt";
 const string stopTimesFile = "/stop_times.txt";
 const string transfersFile = "/transfers.txt";
 const string tripsFile = "/trips.txt";
+const string resultatFile = "/Resultat.txt";
 const char delimiter = ',';
 
-int main() {
+string TrouverNomRepertoire(const string& cheminFichier)
+{
+     size_t position = cheminFichier.find_last_of("\\/");
+     if (string::npos == position)
+         return "";
+     return cheminFichier.substr(0, position);
+}
 
+int main(int argc, char *argv[]) {
+
+	string repertoireDossierRTC = TrouverNomRepertoire(argv[0]) + "/RTC/";
 	clock_t clkStart;
 	clock_t clkEnd;
+	clock_t clk1;
+	clock_t clk2;
+	clock_t clk3;
+	clock_t clk4;
+	clock_t clk5;
+	clock_t clk6;
+	clock_t clk7;
+	clock_t clk8;
+	clock_t clk9;
+	clock_t clk10;
+	clock_t clk11;
+	clock_t clk12;
+	clock_t clk13;
+	clock_t clk14;
+	clock_t clk15;
+	clock_t clk16;
+	clock_t clk17;
+	clock_t clk18;
+	clock_t clk19;
+	clock_t clk20;
 	double timePassed;
 	vector<Ligne> vectLignes;
 	vector<Station> vectStations;
@@ -55,52 +84,115 @@ int main() {
 
     try
     {
-    	lireFichier(directoryFilesPath + agencyFile, resultsAgency, delimiter, true);
+    	clk1 = clock();
 
+    	lireFichier(repertoireDossierRTC + agencyFile, resultsAgency, delimiter, true);
 
-    	lireFichier(directoryFilesPath + calendarDatesFile, resultsCalendarDates, delimiter, true);
+    	clk2 = clock();
+    	timePassed = (double)(clk2 - clk1) / CLOCKS_PER_SEC;
+		cout << "Agency lu en " << timePassed << " secondes (" << resultsAgency.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + calendarDatesFile, resultsCalendarDates, delimiter, true);
 
-    	lireFichier(directoryFilesPath + routesFile, resultsRoutes, delimiter, true);
+    	clk3 = clock();
+    	timePassed = (double)(clk3 - clk2) / CLOCKS_PER_SEC;
+		cout << "CalendarDates lu en " << timePassed << " secondes (" << resultsCalendarDates.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + routesFile, resultsRoutes, delimiter, true);
 
-    	lireFichier(directoryFilesPath + shapesFile, resultsShapes, delimiter, true);
+    	clk4 = clock();
+    	timePassed = (double)(clk4 - clk3) / CLOCKS_PER_SEC;
+		cout << "Routes lu en " << timePassed << " secondes (" << resultsRoutes.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + shapesFile, resultsShapes, delimiter, true);
 
-    	lireFichier(directoryFilesPath + stopsFile, resultsStops, delimiter, true);
+    	clk5 = clock();
+    	timePassed = (double)(clk5 - clk4) / CLOCKS_PER_SEC;
+		cout << "Shapes lu en " << timePassed << " secondes (" << resultsShapes.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + stopsFile, resultsStops, delimiter, true);
 
-    	lireFichier(directoryFilesPath + stopTimesFile, resultsStopsTimes, delimiter, true);
+    	clk6 = clock();
+    	timePassed = (double)(clk6 - clk5) / CLOCKS_PER_SEC;
+		cout << "Stops lu en " << timePassed << " secondes (" << resultsStops.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + stopTimesFile, resultsStopsTimes, delimiter, true);
 
-    	lireFichier(directoryFilesPath + transfersFile, resultsTransfers, delimiter, true);
+    	clk7 = clock();
+    	timePassed = (double)(clk7 - clk6) / CLOCKS_PER_SEC;
+		cout << "StopsTimes lu en " << timePassed << " secondes (" << resultsStopsTimes.size() << " lignes)" << endl;
 
+    	lireFichier(repertoireDossierRTC + transfersFile, resultsTransfers, delimiter, true);
 
-    	lireFichier(directoryFilesPath + tripsFile, resultsTrips, delimiter, true);
+    	clk8 = clock();
+    	timePassed = (double)(clk8 - clk7) / CLOCKS_PER_SEC;
+		cout << "Transfers lu en " << timePassed << " secondes (" << resultsTransfers.size() << " lignes)" << endl;
+
+    	lireFichier(repertoireDossierRTC + tripsFile, resultsTrips, delimiter, true);
+
+    	clk9 = clock();
+    	timePassed = (double)(clk9 - clk8) / CLOCKS_PER_SEC;
+		cout << "Trips lu en " << timePassed << " secondes (" << resultsTrips.size() << " lignes)" << endl;
 
     	for (unsigned int i = 0; i < resultsStopsTimes.size(); i++)	{
     		vectArrets.push_back(Arret(resultsStopsTimes[i]));
     	}
+
+    	clk10 = clock();
+		timePassed = (double)(clk10 - clk9) / CLOCKS_PER_SEC;
+		cout << "VectArrets rempli en " << timePassed << " secondes (" << resultsStopsTimes.size() << " arrets)" << endl;
+
     	sort(vectArrets.begin(), vectArrets.end());
+
+    	clk11 = clock();
+		timePassed = (double)(clk11 - clk10) / CLOCKS_PER_SEC;
+		cout << "VectArrets trié en " << timePassed << " secondes (" << resultsStopsTimes.size() << " arrets)" << endl;
 
     	for (unsigned int i = 0; i < resultsRoutes.size(); i++)	{
     		vectLignes.push_back(Ligne(resultsRoutes[i]));
     	}
 
-    	for (unsigned int i = 0; i < resultsTrips.size(); i++)	{
+    	clk12 = clock();
+		timePassed = (double)(clk12 - clk11) / CLOCKS_PER_SEC;
+		cout << "vectLignes rempli en " << timePassed << " secondes (" << resultsRoutes.size() << " arrets)" << endl;
+
+    	for (unsigned int i = 0; i < resultsTrips.size() * 0 + 1; i++)	{
+    		clk13 = clock();
     		for (unsigned int j = 0; j < vectLignes.size(); j++)	{
     			if (std::stoul(resultsTrips[i][0]) == vectLignes[j].getId()){
+    				clk17 = clock();
     				vectVoyages.push_back(Voyage(resultsTrips[i], &vectLignes[j]));
+    				clk18 = clock();
     				vectLignes[j].addVoyage(&vectVoyages.back());
+    				clk19 = clock();
     				vectVoyages.back().setArrets(vectArrets);
+    				clk20 = clock();
     				break;
     				}
     		}
+    		clk14 = clock();
+    		timePassed = (double)(clk14 - clk13) / CLOCKS_PER_SEC;
+    		cout << "itération " << i << " sur " << resultsTrips.size() << " complétée en " << timePassed << " secondes (" << vectLignes.size() << " sous-itérations)" << endl;
+    		timePassed = (double)(clk18 - clk17) / CLOCKS_PER_SEC;
+    		cout << "Temps commande 1: " << timePassed << endl;
+    		timePassed = (double)(clk19 - clk18) / CLOCKS_PER_SEC;
+    		cout << "Temps commande 2: " << timePassed << endl;
+    		timePassed = (double)(clk20 - clk19) / CLOCKS_PER_SEC;
+    		cout << "Temps commande 3: " << timePassed << endl;
+    		cout << "Il reste " << vectArrets.size() << " arrêts à distribuer" << endl;
     	}
 
+    	clk15 = clock();
+		timePassed = (double)(clk15 - clk14) / CLOCKS_PER_SEC;
+		cout << "bigStuff rempli en " << timePassed << " secondes (" << (resultsTrips.size() * vectLignes.size()) << " iterations)" << endl;
+
     	for (unsigned int i = 0; i < resultsStops.size(); i++)	{
-    			vectStations.push_back(Station(resultsStops[i]));
-    		}
+			vectStations.push_back(Station(resultsStops[i]));
+		}
+
+    	clk16 = clock();
+    	timePassed = (double)(clk16 - clk15) / CLOCKS_PER_SEC;
+		cout << "vectStations rempli en " << timePassed << " resultsStops" << endl;
     }
 	catch (char const* msg)
 	{
@@ -111,39 +203,45 @@ int main() {
 	clkEnd = clock();
 	timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
 
-	cout << "Chargement des données terminé en " << time << " secondes\n";
-	//cout << "----------------------\n";
-	//cout << "LIGNES DE LA RTC\n";
-	//cout << "COMPTE = " <<  vectLignes.size() << "\n";
-	//cout << "----------------------\n";
-	//for (unsigned int i = 0; i < vectLignes.size(); i++)	{
-	//	cout << vectLignes[i];
-	//}
+	ofstream fichierTexte;
+	fichierTexte.open (repertoireDossierRTC + resultatFile);
 
-	//cout << "----------------------\n";
-	//cout << "STATIONS DE LA RTC\n";
-	//cout << "COMPTE = " <<  vectStations.size() << "\n";
-	//cout << "----------------------\n";
-	//for (unsigned int i = 0; i < vectStations.size(); i++)	{
-	//	cout << vectStations[i];
-	//}
+	fichierTexte << "Chargement des données terminé en " << timePassed << " secondes" << endl;
+	fichierTexte << "======================" << endl;
+	fichierTexte << "LIGNES DE LA RTC" << endl;
+	fichierTexte << "COMPTE = " <<  vectLignes.size() << endl;
+	fichierTexte << "======================" << endl;
+	for (unsigned int i = 0; i < vectLignes.size(); i++)	{
+		fichierTexte << vectLignes[i] << endl;
+	}
+
+	fichierTexte << "======================" << endl;
+	fichierTexte << "STATIONS DE LA RTC" << endl;
+	fichierTexte << "COMPTE = " <<  vectStations.size() << endl;
+	fichierTexte << "======================" << endl;
+	for (unsigned int i = 0; i < vectStations.size(); i++)	{
+		fichierTexte << vectStations[i] << endl;
+	}
 
 	time_t t = time(0);
 	struct tm * now = localtime( & t );
 
-	cout << "----------------------\n";
-	cout << "VOYAGES DE LA JOURNÉE DU " << now->tm_year + 1900 << '-' << now->tm_mon + 1
-			<< '-' << now->tm_mday << "\n";
-	cout << now->tm_hour<< ':' << now->tm_min << ':' << now->tm_sec << ' - '
-			<< now->tm_hour + 1<< ':' << now->tm_min << ':' << now->tm_sec << "\n";
-	cout << "COMPTE = " <<  vectVoyages.size() << "\n";
-	cout << "----------------------\n";
+	fichierTexte << "----------------------" << endl;
+	fichierTexte << "VOYAGES DE LA JOURNÉE DU " << now->tm_year + 1900 << '-' << now->tm_mon + 1
+			<< '-' << now->tm_mday << endl;
+	fichierTexte << now->tm_hour << ':' << now->tm_min << ':' << now->tm_sec << " - "
+			<< now->tm_hour + 1 << ':' << now->tm_min << ':' << now->tm_sec << endl;
+	fichierTexte << "COMPTE = " <<  vectVoyages.size() << endl;
+	fichierTexte << "----------------------" << endl;
 	for (unsigned int i = 0; i < vectVoyages.size(); i++)	{
-		cout << vectVoyages[i];
+		fichierTexte << vectVoyages[i] << endl;
 	}
 
-	cout << vectArrets.size() << "\n";
-	cout << vectVoyages.size() << "\n";
-	cout << vectStations.size() << "\n";
+	cout << vectArrets.size() << endl;
+	cout << vectVoyages.size() << endl;
+	cout << vectStations.size() << endl;
+
+	fichierTexte.close();
+
 	return 0;
 }
