@@ -47,12 +47,11 @@ void Ligne::setCategorie(CategorieBus categorie){
 }
 
 std::pair<std::string, std::string> Ligne::getDestinations() const{
-	int index = m_description.find('-');
 	std::pair<std::string,std::string> destinations;
 
 	destinations = std::make_pair(
-			m_description.substr(0,index),
-			m_description.substr(index+1)
+			this->getVoyages().front()->getDestination(),
+			this->getVoyages().back()->getDestination()
 	);
 
 	return destinations;
