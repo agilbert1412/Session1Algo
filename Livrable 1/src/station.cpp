@@ -15,7 +15,7 @@ Station::Station(const std::vector<std::string>& ligne_gtfs)
 }
 
 std::ostream & operator<<(std::ostream & flux, const Station & p_station){
-	return flux << p_station.getId() << " - " <<  p_station.getNom();
+	return flux << p_station.getId() << " " <<  p_station.getNom() << "\n";
 }
 
 const Coordonnees & Station::getCoords() const{

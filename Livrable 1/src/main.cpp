@@ -18,7 +18,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-#include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 	vector<Ligne> vectLignes;
 	vector<Station> vectStations;
 	vector<Voyage> vectVoyages;
-	vector<Arret> vectArrets;
+	std::unordered_map<std::string, std::vector<Arret>> mapVoyageArrets;
 	vector<vector<string>> resultsAgency;
 	vector<vector<string>> resultsCalendarDates;
 	vector<vector<string>> resultsRoutes;
@@ -134,15 +134,18 @@ int main(int argc, char *argv[]) {
     	timePassed = (double)(clk9 - clk8) / CLOCKS_PER_SEC;
 		cout << "Trips lu en " << timePassed << " secondes (" << resultsTrips.size() << " lignes)" << endl;
 
-    	for (unsigned int i = 0; i < resultsStopsTimes.size(); i++)	{
-    		vectArrets.push_back(Arret(resultsStopsTimes[i]));
-    	}
+		for (unsigned int i = 0; i < resultsStopsTimes.size(); i++)	{
+		    Arret arretTemp = Arret(resultsStopsTimes[i]);
+		    if (mapVoyageArrets.find(arretTemp.getVoyageId()) != mapVoyageArrets.end()) {
+		    	mapVoyageArrets[arretTemp.getVoyageId()].push_back(arretTemp);
+		    } else {
+		    	mapVoyageArrets.insert(make_pair(arretTemp.getVoyageId(), std::vector<Arret> {arretTemp}));
+		    }
+		}
 
     	clk10 = clock();
 		timePassed = (double)(clk10 - clk9) / CLOCKS_PER_SEC;
 		cout << "VectArrets rempli en " << timePassed << " secondes (" << resultsStopsTimes.size() << " arrets)" << endl;
-
-    	sort(vectArrets.begin(), vectArrets.end());
 
     	clk11 = clock();
 		timePassed = (double)(clk11 - clk10) / CLOCKS_PER_SEC;
@@ -165,7 +168,9 @@ int main(int argc, char *argv[]) {
     				clk18 = clock();
     				vectLignes[j].addVoyage(&vectVoyages.back());
     				clk19 = clock();
-    				vectVoyages.back().setArrets(vectArrets);
+    				if (mapVoyageArrets.find(vectVoyages.back().getId()) != mapVoyageArrets.end()) {
+    				    	vectVoyages.back().setArrets(mapVoyageArrets[vectVoyages.back().getId()]);
+    				}
     				clk20 = clock();
     				break;
     				}
@@ -179,7 +184,6 @@ int main(int argc, char *argv[]) {
     		cout << "Temps commande 2: " << timePassed << endl;
     		timePassed = (double)(clk20 - clk19) / CLOCKS_PER_SEC;
     		cout << "Temps commande 3: " << timePassed << endl;
-    		cout << "Il reste " << vectArrets.size() << " arrêts à distribuer" << endl;
     	}
 
     	clk15 = clock();
@@ -237,7 +241,6 @@ int main(int argc, char *argv[]) {
 		fichierTexte << vectVoyages[i] << endl;
 	}
 
-	cout << vectArrets.size() << endl;
 	cout << vectVoyages.size() << endl;
 	cout << vectStations.size() << endl;
 
