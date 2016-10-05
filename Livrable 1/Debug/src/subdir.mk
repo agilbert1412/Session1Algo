@@ -4,7 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/Livrable\ 1.cpp \
+../src/Livrable1.cpp \
 ../src/arret.cpp \
 ../src/auxiliaires.cpp \
 ../src/coordonnees.cpp \
@@ -13,7 +13,7 @@ CPP_SRCS += \
 ../src/voyage.cpp 
 
 OBJS += \
-./src/Livrable\ 1.o \
+./src/Livrable1.o \
 ./src/arret.o \
 ./src/auxiliaires.o \
 ./src/coordonnees.o \
@@ -22,7 +22,7 @@ OBJS += \
 ./src/voyage.o 
 
 CPP_DEPS += \
-./src/Livrable\ 1.d \
+./src/Livrable1.d \
 ./src/arret.d \
 ./src/auxiliaires.d \
 ./src/coordonnees.d \
@@ -32,13 +32,6 @@ CPP_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/Livrable\ 1.o: ../src/Livrable\ 1.cpp
-	@echo 'Building file: $<'
-	@echo 'Invoking: GCC C++ Compiler'
-	g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Livrable 1.d" -MT"src/Livrable\ 1.d" -o "$@" "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
-
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'

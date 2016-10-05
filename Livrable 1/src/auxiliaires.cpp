@@ -9,12 +9,67 @@
 #include "auxiliaires.h"
 #include <ctime>
 
+using namespace std;
+
+vector<string> split(const string& s, char delim) {
+
+	size_t prochainDelimPos = s.find_first_of(delim);
+	int debut = 0;
+
+	vector<string> retour;
+	while (prochainDelimPos <= string::npos)
+	{
+		retour.emplace_back(s.substr(debut, prochainDelimPos - debut));
+
+		if (prochainDelimPos == string::npos)
+			break;
+
+		debut = prochainDelimPos + 1;
+		prochainDelimPos = s.find_first_of(delim, debut);
+	}
+
+	return retour;
+}
+
+/*!
+ * \brief Permet de lire un fichier au format gtfs
+ * \param[in] nomFichier: chemin d'acces au fichier qui est suposé contennir plusieurs lignes et plusieurs colonnes
+ * \param[out] resultats: vecteur 2D destiné à contenir le fichier, l'élement [i][j] représente la ième ligne et la jème colonne du fichier
+ * \param[in] delimiteur: le caractère délimiteur des colonnes dans ce fichier.
+ * \param[in] rm_entete: un booléen qui spécifie s'il faut supprimer ou pas la première ligne du fichier.
+ * \pre Le fichier existe.
+ * \exception logic_error s'il y a un problème lors de l'ouverture du fichier.
+ */
+void lireFichier(string nomFichier, vector<vector<string>>& resultats, char delimiteur, bool rm_entete) {
+	string ligne;
+	ifstream fichier(nomFichier);
+
+	//resultats.reserve(100);  // On aura pas plus de 5 millions de lignes (?)
+
+	if (rm_entete)
+		getline(fichier, ligne);
+
+	while (getline(fichier, ligne))
+	{
+		resultats.emplace_back();
+	    vector<string>& rangee = resultats.back();
+	    rangee = split(ligne, delimiteur);
+//	    rangee.reserve(1000); // On aura pas plus de 1000 elements par ligne (?)
+//	    istringstream buffer(ligne);
+//	    string element;
+//	    while (buffer >> element)
+//	    {
+//	    	rangee.push_back(element);
+//	    }
+	}
+}
+
 Date::Date(){
 	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	m_an = timePtr->tm_year;
-	m_mois = timePtr->tm_mon;
-	m_jour = timePtr->tm_mday;
+	tm* ptrTemps = localtime(&t);
+	m_an = ptrTemps->tm_year + 1900;
+	m_mois = ptrTemps->tm_mon;
+	m_jour = ptrTemps->tm_mday;
 }
 
 Date::Date(unsigned int an, unsigned int mois, unsigned int jour){
@@ -42,7 +97,7 @@ bool Date::operator<(const Date & other) const {
 		return true;
 	if (this-> m_an > other.m_an)
 		return false;
-	if (this->m_mois < other.m_an)
+	if (this->m_mois < other.m_mois)
 		return true;
 	if (this->m_mois > other.m_mois)
 		return false;
@@ -56,7 +111,7 @@ bool Date::operator>(const Date & other) const {
 		return true;
 	if (this-> m_an < other.m_an)
 		return false;
-	if (this->m_mois > other.m_an)
+	if (this->m_mois > other.m_mois)
 		return true;
 	if (this->m_mois < other.m_mois)
 		return false;
@@ -66,15 +121,15 @@ bool Date::operator>(const Date & other) const {
 }
 
 std::ostream & operator<<(std::ostream & flux, const Date & p_date) {
-	return flux << p_date.m_jour << "-" << p_date.m_mois << "-" << p_date.m_jour;
+	return flux << p_date.m_jour << "-" << p_date.m_mois << "-" << p_date.m_an;
 }
 
 Heure::Heure() {
 	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	m_heure = timePtr->tm_hour;
-	m_min = timePtr->tm_min;
-	m_sec = timePtr->tm_sec;
+	tm* ptrTemps = localtime(&t);
+	m_heure = ptrTemps->tm_hour;
+	m_min = ptrTemps->tm_min;
+	m_sec = ptrTemps->tm_sec;
 }
 
 Heure::Heure(unsigned int heure, unsigned int min, unsigned int sec) {
@@ -152,5 +207,10 @@ bool Heure::operator>= (const Heure & other) const {
 	return (*this == other || *this > other);
 }
 
-//int operator- (const Heure & other) const;
-//friend std::ostream & operator<<(std::ostream & flux, const Heure & p_heure);
+int Heure::operator- (const Heure & other) const {
+	return (this->m_sec - other.m_sec) + ((this->m_min - other.m_min) * 60) + ((this->m_heure - other.m_heure) * 3600);
+}
+
+std::ostream& operator<<(std::ostream& flux, const Heure& p_heure) {
+	return flux << p_heure.m_heure << ":" << p_heure.m_min << ":" << p_heure.m_sec;
+}
