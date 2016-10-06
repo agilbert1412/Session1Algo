@@ -31,20 +31,10 @@ vector<string> split(const string& s, char delim) {
 	return retour;
 }
 
-/*!
- * \brief Permet de lire un fichier au format gtfs
- * \param[in] nomFichier: chemin d'acces au fichier qui est suposé contennir plusieurs lignes et plusieurs colonnes
- * \param[out] resultats: vecteur 2D destiné à contenir le fichier, l'élement [i][j] représente la ième ligne et la jème colonne du fichier
- * \param[in] delimiteur: le caractère délimiteur des colonnes dans ce fichier.
- * \param[in] rm_entete: un booléen qui spécifie s'il faut supprimer ou pas la première ligne du fichier.
- * \pre Le fichier existe.
- * \exception logic_error s'il y a un problème lors de l'ouverture du fichier.
- */
 void lireFichier(string nomFichier, vector<vector<string>>& resultats, char delimiteur, bool rm_entete) {
+
 	string ligne;
 	ifstream fichier(nomFichier);
-
-	//resultats.reserve(100);  // On aura pas plus de 5 millions de lignes (?)
 
 	if (rm_entete)
 		getline(fichier, ligne);
@@ -114,7 +104,7 @@ bool Date::operator>(const Date & other) const {
 }
 
 std::ostream & operator<<(std::ostream & flux, const Date & p_date) {
-	return flux << p_date.m_jour << "-" << p_date.m_mois << "-" << p_date.m_an;
+	return flux << string(2 - to_string(p_date.m_jour).length(), '0').append(to_string(p_date.m_jour)) << "-" << string(2 - to_string(p_date.m_mois).length(), '0').append(to_string(p_date.m_mois)) << "-" << p_date.m_an;
 }
 
 Heure::Heure() {
@@ -205,5 +195,5 @@ int Heure::operator- (const Heure & other) const {
 }
 
 std::ostream& operator<<(std::ostream& flux, const Heure& p_heure) {
-	return flux << p_heure.m_heure << ":" << p_heure.m_min << ":" << p_heure.m_sec;
+	return flux << string(2 - to_string(p_heure.m_heure).length(), '0').append(to_string(p_heure.m_heure)) << ":" << string(2 - to_string(p_heure.m_min).length(), '0').append(to_string(p_heure.m_min)) << ":" << string(2 - to_string(p_heure.m_sec).length(), '0').append(to_string(p_heure.m_sec));
 }

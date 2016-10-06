@@ -64,6 +64,6 @@ bool Arret::operator> (const Arret & p_other) const{
 }
 
 std::ostream & operator<<(std::ostream & flux, const Arret & p_arret){
-	return flux << "Satation ID: " << p_arret.getStationId() << " Voyage ID: " << p_arret.getVoyageId();
+	return flux << "Station ID: " << p_arret.getStationId() << " Voyage ID: " << p_arret.getVoyageId();
 }
 

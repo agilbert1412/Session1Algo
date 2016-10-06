@@ -11,8 +11,18 @@
 
 
 Ligne::Ligne(const std::vector<std::string> & ligne_gtfs)
-: m_id(std::stoul(ligne_gtfs[0])), m_numero(ligne_gtfs[2]), m_description(ligne_gtfs[4]),
-  m_categorie(couleurToCategorie(ligne_gtfs[7])), m_voyages(){
+: m_id(std::stoul(ligne_gtfs[0])), m_categorie(couleurToCategorie(ligne_gtfs[7])), m_voyages(){
+
+	m_numero = ligne_gtfs[2];
+	m_description = ligne_gtfs[4];
+
+	if (m_numero.front() == '"')
+		if (m_numero.back() == '"')
+			m_numero = m_numero.substr(1, m_numero.length() - 2);
+
+	if (m_description.front() == '"')
+			if (m_description.back() == '"')
+				m_description = m_description.substr(1, m_description.length() - 2);
 }
 
 CategorieBus Ligne::couleurToCategorie(std::string couleur){
@@ -47,11 +57,12 @@ void Ligne::setCategorie(CategorieBus categorie){
 }
 
 std::pair<std::string, std::string> Ligne::getDestinations() const{
-	std::pair<std::string,std::string> destinations;
+	int index = m_description.find('-');
+	std::pair<std::string, std::string> destinations { };
 
 	destinations = std::make_pair(
-			this->getVoyages().front()->getDestination(),
-			this->getVoyages().back()->getDestination()
+			m_description.substr(0,index),
+			m_description.substr(index+1)
 	);
 
 	return destinations;
@@ -94,6 +105,6 @@ void Ligne::setDescription(const std::string& description){
 }
 
 std::ostream& operator <<(std::ostream& f, const Ligne& p_ligne){
-	return f << "LEBUS " <<  p_ligne.getNumero() << " " <<  p_ligne.getDestinations().first
-					+  p_ligne.getDestinations().second << "\n";
+	return f << "LEBUS " <<  p_ligne.getNumero() << " : " <<  p_ligne.getDestinations().first
+					+  p_ligne.getDestinations().second;
 }

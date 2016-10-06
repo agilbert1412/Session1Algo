@@ -9,8 +9,16 @@
 #include "voyage.h"
 #include <algorithm>
 
+using namespace std;
+
 Voyage::Voyage(const std::vector<std::string>& ligne_gtfs, Ligne* p_ligne)
-: m_id(ligne_gtfs[2]), m_service_id(ligne_gtfs[1]), m_destination(ligne_gtfs[3]), m_ligne(p_ligne){
+: m_id(ligne_gtfs[2]), m_service_id(ligne_gtfs[1]), m_ligne(p_ligne){
+
+	m_destination = ligne_gtfs[3];
+
+	if (m_destination.front() == '"')
+		if (m_destination.back() == '"')
+			m_destination = m_destination.substr(1, m_destination.length() - 2);
 }
 
 Arret & Voyage::arretDeLaStation(unsigned int p_num_station){
@@ -85,17 +93,18 @@ Heure Voyage::getHeureFin() const{
 
 void Voyage::setArrets(std::vector<Arret>& resultat){
 
-	sort(resultat.begin(), resultat.end());
+	std::vector<Arret> Arrets;
 
 	for (unsigned int i = 0; i < resultat.size(); i++)
 	{
-		if (resultat.size() > 1 && resultat.end()[-1].getHeureArrivee() == resultat.end()[-2].getHeureArrivee())
-			{
-			resultat.end()[-1].setHeureArrivee(resultat.end()[-1].getHeureArrivee().add_secondes(30));
-			resultat.end()[-1].setHeureDepart(resultat.end()[-1].getHeureDepart().add_secondes(30));
+		Arrets.push_back(resultat[i]);
+		if (Arrets.size() > 1 && Arrets.end()[-1].getHeureArrivee() == Arrets.end()[-2].getHeureArrivee())
+		{
+			Arrets.end()[-1].setHeureArrivee(Arrets.end()[-1].getHeureArrivee().add_secondes(30));
+			Arrets.end()[-1].setHeureDepart(Arrets.end()[-1].getHeureDepart().add_secondes(30));
 		}
 	}
-	m_arrets = resultat;
+	m_arrets = Arrets;
 }
 
 bool Voyage::operator< (const Voyage & p_other) const{
@@ -109,7 +118,9 @@ bool Voyage::operator> (const Voyage & p_other) const{
 }
 
 std::ostream & operator<<(std::ostream & flux, const Voyage & p_voyage){
-	return flux << p_voyage.getHeureDepart() << " - " <<  p_voyage.getDestination() << "\n";
-
+	flux << p_voyage.getLigne()->getNumero() << ": Vers " << p_voyage.getDestination();
+	for (unsigned int i = 0; i < p_voyage.getArrets().size(); i++) {
+		flux << endl << p_voyage.getArrets()[i].getHeureArrivee() << " - " << p_voyage.getArrets()[i].getStationId();
+	}
+	return flux;
 }
-
