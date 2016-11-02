@@ -5,6 +5,8 @@
 #ifndef RTC_COORDONNEES_H
 #define RTC_COORDONNEES_H
 
+#include <cmath>
+#include <exception>
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
@@ -13,12 +15,9 @@
  * \class Coordonnees
  * \brief Cette classe permet de représenter les coordonnées GPS d'un endroit
  */
-
-
 class Coordonnees {
 
 public:
-
 
     Coordonnees(double latitude, double longitude);
 

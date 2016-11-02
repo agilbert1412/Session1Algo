@@ -44,7 +44,7 @@ all: Livrable\ 1
 Livrable\ 1: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "Livrable 1" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/home/etudiant/workspace/Livrable 1" -o "Livrable 1" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

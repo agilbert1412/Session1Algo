@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_set>
 #include <iostream>
 #include "coordonnees.h"
 #include "ligne.h"

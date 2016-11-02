@@ -10,6 +10,8 @@
 #include "voyage.h"
 #include "station.h"
 #include "auxiliaires.h"
+#include <exception>
+#include <algorithm>
 
 /*!
  * \enum CategorieBus
@@ -25,6 +27,10 @@ class Voyage;
  * \class Ligne
  * \brief Cette classe représente une ligne d'autobus du réseau de transport contenues dans le fichier routes.txt
  * Par exemple, la "800", la "801" et la "13A" sont toutes des lignes différentes.
+ * Veuillez, noter qu’il y peut y avoir plus d'une  entrées dans le fichier routes.txt pour chaque ligne d’autobus.
+ * Cela est dû au fait qu'un dossier gtfs puisse cheuvaucher deux saisons (des saisons différentes donnent des ids différents à une même ligne).
+ * Ceci qui implique qu’un numéro de ligne est associé à deux identifiants différents, cependant vous ne devez construire qu'un seul
+ * objet ligne par ligne d'autobus.
  * \note Sa déclaration nécessite la déclaration partielle des classe Voyage, en raison de référence circulaire avec cette classe.
  */
 class Ligne {
@@ -37,9 +43,9 @@ private:
     std::vector<Voyage*> m_voyages;
 
 public:
-	Ligne(const std::vector<std::string>& ligne_gtfs);
-	static CategorieBus couleurToCategorie(std::string couleur);
-	static std::string categorieToString(CategorieBus c);
+    Ligne(const std::vector<std::string>& ligne_gtfs);
+    static CategorieBus couleurToCategorie(std::string couleur);
+    static std::string categorieToString(CategorieBus c);
 	CategorieBus getCategorie() const;
 	void setCategorie(CategorieBus categorie);
 	std::pair<std::string, std::string> getDestinations() const;
