@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <unordered_map>
+#include <vector>
 
 #ifndef Reseau__H
 #define Reseau__H
@@ -13,7 +15,7 @@
 /*!
  *
  */
-typedef std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int> > liste_arcs;
+typedef std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int>> liste_arcs;
 
 
 /*!
@@ -52,7 +54,11 @@ public:
 	int getComposantesFortementConnexes(std::vector<std::vector<unsigned int> > & composantes) const;
 
 private:
-	/** À compléter */
+
+	size_t m_nbSommets;
+	size_t m_nbArcs;
+	std::vector<int> m_sommets;
+	std::vector<liste_arcs> m_listesAdj;
 
 };
 

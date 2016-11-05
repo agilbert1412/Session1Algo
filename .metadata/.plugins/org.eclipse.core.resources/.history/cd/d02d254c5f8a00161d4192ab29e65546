@@ -1,0 +1,22 @@
+//============================================================================
+// Name        : Livrable.cpp
+// Author      : Slim Ben Yahia
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+using namespace std;
+
+int main() {
+	Heure heure1 = new Heure();
+	Heure heure2 = new Heure();
+
+
+	cout << heure1 << endl; // prints !!!Hello World!!!
+
+	delete heure1;
+	delete heure2
+	return 0;
+}

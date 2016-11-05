@@ -24,7 +24,16 @@ const unsigned int num_depart = 0; //numéro donnée pour la station phantome de
 
 const unsigned int num_dest = 1; //numéro donnée pour la station phantome de destination
 
+const std::string calendarDatesFile = "RTC/calendar_dates.txt";
+const std::string routesFile = "RTC/routes.txt";
+const std::string stopsFile = "RTC/stops.txt";
+const std::string stopTimesFile = "RTC/stop_times.txt";
+const std::string tripsFile = "RTC/trips.txt";
+const std::string resultatFile = "Resultat.txt";
+const char delimiter { ',' };
+
 enum class MoyenDeplacement {BUS=0, PIEDS};
+
 
 
 /*!
@@ -47,6 +56,8 @@ public:
 
 	Station getStation(int station_id);
 
+	std::vector<Voyage*> trouver_voyages(int station_id, std::string num_ligne);
+
 	std::pair<std::string, std::string> get_bus_destinations(int station_id, std::string num_ligne);
 
 	std::vector<std::pair<double, Station*>> trouver_stations_environnantes(Coordonnees coord, double rayon);
@@ -61,16 +72,20 @@ public:
 	std::vector< unsigned int > plus_court_chemin(Date date, Heure heure_depart, Coordonnees depart, Coordonnees destination);
 
 
-private:
 	Reseau m_reseau;
 
 	void initialiser_reseau(Date date, Heure heure_depart, Heure heure_fin, Coordonnees depart, Coordonnees dest,
 			double dist_de_marche=distance_max_initiale, double dist_transfert=distance_max_transfert);
 
+private:
 	/** À compléter */
 
+	std::unordered_map<std::string, Ligne> m_lignes;
+	std::unordered_map<int, Station> m_stations;
+	std::vector<Voyage> m_voyages;
+	std::unordered_map<std::string, std::vector<Voyage*>> m_voyages_date;
 
-
+	void enlever_guillemets(std::string& champ);
 };
 
 #endif //RTC_GESTIONNAIRE_H

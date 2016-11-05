@@ -1,0 +1,10 @@
+14:31:32 **** Clean-only build of configuration Debug for project Livrable 1 ****
+make clean 
+rm -rf  ./src/Livrable1.o ./src/arret.o ./src/auxiliaires.o ./src/coordonnees.o ./src/ligne.o ./src/station.o ./src/voyage.o  ./src/Livrable1.d ./src/arret.d ./src/auxiliaires.d ./src/coordonnees.d ./src/ligne.d ./src/station.d ./src/voyage.d  "Livrable 1"
+rm: impossible de supprimer 'Livrable 1': Fichier texte occupé
+makefile:53 : la recette pour la cible « clean » a échouée
+make: [clean] Erreur 1 (ignorée)
+ 
+
+14:31:32 Build Finished (took 78ms)
+
