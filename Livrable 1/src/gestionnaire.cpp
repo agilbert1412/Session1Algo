@@ -203,7 +203,7 @@ Ligne Gestionnaire::getLigne(string num_ligne)
 */
 Station Gestionnaire::getStation(int station_id)
 {
-	unordered_map<int, Station>::const_iterator station = m_stations.find(station_id);
+	unordered_map<unsigned int, Station>::const_iterator station = m_stations.find(station_id);
 	if (station == m_stations.end())
 		throw "Il n’existe pas de station ayant cet identifiant";
 	return station->second;
@@ -395,43 +395,83 @@ void Gestionnaire::initialiser_reseau(Date date, Heure heure_depart, Heure heure
 Coordonnees depart, Coordonnees dest, double dist_de_marche, double dist_transfert)
 {
 	m_reseau = Reseau();
-	m_reseau.ajouterSommet(num_depart);
-	m_reseau.ajouterSommet(num_dest);
+	bool considererDepart = (depart.getLatitude() != -1 && depart.getLongitude() != -1);
+	bool considererArrivee = (dest.getLatitude() != -1 && dest.getLongitude() != -1);
+	if (considererDepart)
+	{
+		m_reseau.ajouterSommet(num_depart);
+	}
+	if (considererArrivee)
+	{
+		m_reseau.ajouterSommet(num_dest);
+	}
+	if (considererArrivee && considererDepart)
+	{
+		double distanceDepartArrivee = abs(depart - dest);
+		if (distanceDepartArrivee < dist_de_marche)
+		{
+			double tempsSec = distanceDepartArrivee / vitesse_de_marche * 60 * 60;
+			m_reseau.ajouterArc(num_depart, num_dest, tempsSec, (int)MoyenDeplacement::PIEDS);
+		}
+	}
+
 	for (auto i : m_stations)
 	{
 		m_reseau.ajouterSommet(i.first);
-		double distance1 = abs(depart - i.second.getCoords());
-		if (distance1 < dist_de_marche)
+		if (considererDepart)
 		{
-			//double tempsSec = distance1 / vitesse_de_marche * 60 * 60;
-			m_reseau.ajouterArc(num_depart, i.first, distance1, (int)MoyenDeplacement::PIEDS);
-		}
-		double distance2 = abs(i.second.getCoords() - dest);
-		if (distance2 < dist_de_marche)
-		{
-			//double tempsSec = distance2 / vitesse_de_marche * 60 * 60;
-			m_reseau.ajouterArc(i.first, num_dest, distance2, (int)MoyenDeplacement::PIEDS);
-		}
-
-	}
-	for (auto i : m_stations)
-	{
-		for (auto j : m_stations)
-		{
-			if (i.first != j.first)
+			double distance1 = abs(depart - i.second.getCoords());
+			if (distance1 < dist_de_marche)
 			{
-				double distance = abs(i.second.distance(j.second));
-				if (distance < dist_transfert)
+				double tempsSec = distance1 / vitesse_de_marche * 60 * 60;
+				m_reseau.ajouterArc(num_depart, i.first, tempsSec, (int)MoyenDeplacement::PIEDS);
+			}
+		}
+		if (considererArrivee)
+		{
+			double distance2 = abs(i.second.getCoords() - dest);
+			if (distance2 < dist_de_marche)
+			{
+				double tempsSec = distance2 / vitesse_de_marche * 60 * 60;
+				m_reseau.ajouterArc(i.first, num_dest, tempsSec, (int)MoyenDeplacement::PIEDS);
+			}
+		}
+	}
+	if (dist_transfert > 0)
+	{
+		for (auto i : m_stations)
+		{
+			for (auto j : m_stations)
+			{
+				if (i.first != j.first)
 				{
-					//double tempsSec = distance / vitesse_de_marche * 60 * 60;
-					m_reseau.ajouterArc(i.first, j.first, distance, (int)MoyenDeplacement::PIEDS);
+					if (i.first == 1515 && j.first == 1787)
+						cout << "now" << endl;
+					double distance = abs(i.second.distance(j.second));
+					if (distance < dist_transfert)
+					{
+						double tempsSec = distance / vitesse_de_marche * 60 * 60;
+						m_reseau.ajouterArc(i.first, j.first, tempsSec, (int)MoyenDeplacement::PIEDS);
+					}
 				}
 			}
 		}
 	}
 
+	if (!date_est_prise_en_charge(date))
+		return;
+
 	string dateString = to_string(date.getAn()) + string(2 - to_string(date.getMois()).length(), '0').append(to_string(date.getMois())) + string(2 - to_string(date.getJour()).length(), '0').append(to_string(date.getJour()));
 	vector<Voyage*> voyagesCeJourLa = m_voyages_date.at(dateString);
+
+	for (unsigned int i = 0; i < voyagesCeJourLa.size(); i++)
+	{
+		//cout << voyagesCeJourLa[i]->getLigne()->getNumero() << endl;;
+		if ((voyagesCeJourLa[i]->getLigne()->getNumero() == "800" || voyagesCeJourLa[i]->getLigne()->getNumero() == "801") && voyagesCeJourLa[i]->getHeureDepart() > heure_depart)
+		{
+			cout << "normal: " << i << " en direction de " << voyagesCeJourLa[i]->getDestination() << " à " << voyagesCeJourLa[i]->getHeureDepart() << endl;
+		}
+	}
 
 	for (unsigned int i = 0; i < voyagesCeJourLa.size(); i++)
 	{
@@ -442,19 +482,24 @@ Coordonnees depart, Coordonnees dest, double dist_de_marche, double dist_transfe
 			int Id2 = arrets[j].getStationId();
 			if (arrets[j - 1].getHeureDepart() > heure_depart && arrets[j].getHeureArrivee() < heure_fin)
 			{
-				int distance = abs(m_stations.at(arrets[j].getStationId()).distance(m_stations.at(arrets[j - 1].getStationId())));
-				//int temps = (arrets[j].getHeureArrivee() - arrets[j - 1].getHeureDepart());
+				if ((voyagesCeJourLa[i]->getLigne()->getNumero() == "800" || voyagesCeJourLa[i]->getLigne()->getNumero() == "801") && voyagesCeJourLa[i]->getHeureDepart() > heure_depart)
+				{
+					cout << "special: " << i << " en direction de " << voyagesCeJourLa[i]->getDestination() << " à " << voyagesCeJourLa[i]->getHeureDepart() << endl;
+					cout << "Arrets: " << Id1 << " - " << Id2 << endl;
+				}
+				//int distance = abs(m_stations.at(arrets[j].getStationId()).distance(m_stations.at(arrets[j - 1].getStationId())));
+				int temps = (arrets[j].getHeureArrivee() - arrets[j - 1].getHeureDepart());
 				if (m_reseau.arcExiste(Id1, Id2))
 				{
-					int distance2 = m_reseau.getCoutArc(Id1, Id2);
-					if (distance < distance2)
+					int temps2 = m_reseau.getCoutArc(Id1, Id2);
+					if (temps < temps2)
 					{
-						m_reseau.majCoutArc(Id1, Id2, distance);
+						m_reseau.majCoutArc(Id1, Id2, temps);
 					}
 				}
 				else
 				{
-					m_reseau.ajouterArc(Id1, Id2, distance, (int)MoyenDeplacement::BUS);
+					m_reseau.ajouterArc(Id1, Id2, temps, (int)MoyenDeplacement::BUS);
 				}
 			}
 		}
@@ -475,7 +520,15 @@ quelle autre.
 bool Gestionnaire::reseau_est_fortement_connexe(Date date, Heure heure_deb, bool
 considerer_transfert)
 {
-	//return m_reseau.estFortementConnexe();
+	double distance_transfert = distance_max_transfert;
+	double distance_initiale = distance_max_initiale;
+	if (!considerer_transfert)
+	{
+		distance_transfert = 0;
+	}
+	Heure maxHeure = Heure { 29, 59, 59 };
+	initialiser_reseau(date, heure_deb, maxHeure, Coordonnees { -1, -1 }, Coordonnees { -1, -1 }, distance_initiale, distance_transfert);
+	return m_reseau.estFortementConnexe();
 }
 
 /*!
@@ -488,7 +541,54 @@ transfert dans votre calcul
 connexes.
 */
 void Gestionnaire::composantes_fortement_connexes(Date date, Heure heure_deb,
-vector<vector<unsigned int> >& composantes, bool considerer_transfert)
+		vector<vector<unsigned int> >& composantes, bool considerer_transfert)
 {
-	//m_reseau.getComposantesFortementConnexes(composantes);
+	double distance_transfert = distance_max_transfert;
+	double distance_initiale = distance_max_initiale;
+	if (!considerer_transfert)
+	{
+		distance_transfert = 0;
+	}
+	Heure maxHeure = Heure { 29, 59, 59 };
+	initialiser_reseau(date, heure_deb, maxHeure, Coordonnees { -1, -1 }, Coordonnees { -1, -1 }, distance_initiale, distance_transfert);
+	m_reseau.getComposantesFortementConnexes(composantes);
+}
+
+/*!
+* \brief Trouver le plus court chemin en autobus pour aller d'un point A vers un point B
+dans l’interval de temps défini par interval_planification_en_secondes
+* à partir d'une heure de départ et pour une date donnée
+* Pour ce faire, il faut initialiser le réseau, puis faire appel à ses routines de plus courts
+chemin
+* \param date: la date de planification
+* \param heure_depart: l'heure de début de planification
+* \param depart: coordonnées gps du point de départ de votre déplacement
+* \param destination: coordonnées gps du point de d'arrivée de votre déplacement
+* \return Un vecteur contenant les stations du chemin trouvé, le vecteur est vide si aucun
+chemin n’est trouvé
+*/
+vector<unsigned int> Gestionnaire::plus_court_chemin(Date date, Heure heure_depart,
+Coordonnees depart, Coordonnees destination)
+{
+	double distance_transfert = distance_max_transfert;
+	double distance_initiale = distance_max_initiale;
+	Heure maxHeure = Heure { 29, 59, 59 };
+	initialiser_reseau(date, heure_depart, maxHeure, depart, destination, distance_initiale, distance_transfert);
+	cout << "0: " << m_reseau.getCoutArc(0, 1515) << endl;
+	cout << "1515: " << m_reseau.getCoutArc(1515, 1787) << endl;
+	cout << "1787: " << m_reseau.getCoutArc(1787, 1776) << endl;
+	cout << "1776: " << m_reseau.getCoutArc(1776, 1790) << endl;
+	cout << "1790: " << m_reseau.getCoutArc(1790, 1791) << endl;
+	cout << "1791: " << m_reseau.getCoutArc(1791, 2000) << endl;
+	cout << "2000: " << m_reseau.getCoutArc(2000, 2001) << endl;
+	cout << "2001: " << m_reseau.getCoutArc(2001, 2003) << endl;
+	cout << "2003: " << m_reseau.getCoutArc(2003, 2006) << endl;
+	cout << "2006: " << m_reseau.getCoutArc(2006, 1434) << endl;
+	cout << "1434: " << m_reseau.getCoutArc(1434, 2007) << endl;
+	cout << "2007: " << m_reseau.getCoutArc(2007, 4144) << endl;
+	cout << "4144: " << m_reseau.getCoutArc(4144, 3099) << endl;
+	cout << "3099: " << m_reseau.getCoutArc(3099, 1) << endl;
+	vector<unsigned int> resultat;
+	m_reseau.dijkstra(num_depart, num_dest, resultat);
+	return resultat;
 }

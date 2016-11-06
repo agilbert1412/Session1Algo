@@ -236,16 +236,72 @@ int main(int argc, char *argv[]) {
 		cout << 0;
 	}
 	cout << endl;
-	// Tests de initialiser_reseau
-	cout << "initialiser_reseau: ";
-	gest.initialiser_reseau(Date {2016, 12, 16}, heure2, heure3, Coordonnees {46.788274, -71.272794}, Coordonnees {46.780440, -71.300579}, 1, 1);
-	cout << gest.m_reseau.nombreSommets() << endl;
-	cout << gest.m_reseau.nombreArcs() << endl;
-	cout << gest.m_reseau.sommetExiste(0) << endl;
-	cout << gest.m_reseau.sommetExiste(1) << endl;
-	cout << gest.m_reseau.sommetExiste(1412) << endl;
-	cout << gest.m_reseau.sommetExiste(1420) << endl;
-	cout << gest.m_reseau.sommetExiste(3001) << endl;
+//	// Tests de initialiser_reseau
+//	cout << "initialiser_reseau 1: ";
+//	gest.initialiser_reseau(Date {2016, 12, 16}, heure2, heure3, Coordonnees {46.788274, -71.272794}, Coordonnees {46.788440, -71.270579}, 0.55, 0.55);
+//	cout << (gest.m_reseau.nombreSommets() == 4606);
+//	cout << (gest.m_reseau.nombreArcs() == 96614);
+//	cout << (gest.m_reseau.sommetExiste(0));
+//	cout << (gest.m_reseau.sommetExiste(1));
+//	cout << (gest.m_reseau.sommetExiste(1412));
+//	cout << (gest.m_reseau.sommetExiste(1420));
+//	cout << (gest.m_reseau.sommetExiste(3001));
+//	cout << (gest.m_reseau.arcExiste(0, 1));
+//	cout << (!gest.m_reseau.arcExiste(1, 0));
+//	cout << (gest.m_reseau.getCoutArc(0, 1) == 122);
+//	cout << (gest.m_reseau.arcExiste(1412, 1413));
+//	cout << (gest.m_reseau.getCoutArc(1412, 1413) == 334);
+//	cout << endl;
+//	cout << "initialiser_reseau 2: ";
+//	gest.initialiser_reseau(Date {2016, 8, 16}, heure2, heure3, Coordonnees {46.788274, -71.272794}, Coordonnees {46.780440, -71.300579}, 0.55, 0.55);
+//	cout << (gest.m_reseau.nombreSommets() == 4606);
+//	cout << (gest.m_reseau.nombreArcs() == 96739);
+//	cout << gest.m_reseau.sommetExiste(0);
+//	cout << gest.m_reseau.sommetExiste(1);
+//	cout << gest.m_reseau.sommetExiste(1412);
+//	cout << gest.m_reseau.sommetExiste(1420);
+//	cout << gest.m_reseau.sommetExiste(3001);
+//	cout << (!gest.m_reseau.arcExiste(0, 1));
+//	cout << (!gest.m_reseau.arcExiste(1, 0));
+//	cout << (gest.m_reseau.arcExiste(1412, 1413));
+//	cout << (gest.m_reseau.getCoutArc(1412, 1413) == 60);
+//	cout << endl;
+//	cout << "reseau_est_fortement_connexe: ";
+//	bool connexe1 = gest.reseau_est_fortement_connexe(Date {2016, 12, 16}, heure2, true);
+//	cout << !connexe1 << endl;
+//	bool connexe2 = gest.reseau_est_fortement_connexe(Date {2016, 8, 16}, heure2, true);
+//	cout << !connexe2 << endl;
+//	bool connexe3 = gest.reseau_est_fortement_connexe(Date {2016, 10, 5}, heure2, true);
+//	cout << !connexe3 << endl;
+//	bool connexe4 = gest.reseau_est_fortement_connexe(Date {2016, 8, 16}, heure3, false);
+//	cout << !connexe4 << endl;
+//	cout << endl;
+//	cout << "composantes_fortement_connexes: ";
+//	vector<vector<unsigned int>> vectorConnexe1;
+//	gest.composantes_fortement_connexes(Date {2016, 12, 16}, heure2, vectorConnexe1, true);
+//	cout << vectorConnexe1.size() << endl;
+//	vector<vector<unsigned int>> vectorConnexe2;
+//	gest.composantes_fortement_connexes(Date {2016, 8, 16}, heure2, vectorConnexe2, true);
+//	cout << vectorConnexe2.size() << endl;
+//	vector<vector<unsigned int>> vectorConnexe3;
+//	gest.composantes_fortement_connexes(Date {2016, 10, 5}, heure2, vectorConnexe3, true);
+//	cout << vectorConnexe3.size() << endl;
+//	vector<vector<unsigned int>> vectorConnexe4;
+//	gest.composantes_fortement_connexes(Date {2016, 8, 16}, heure3, vectorConnexe4, false);
+//	cout << vectorConnexe4.size() << endl;
+	cout << endl;
+	cout << "plus_court_chemin: ";
+	Coordonnees depart1 = Coordonnees {46.778808, -71.270014};
+	Coordonnees arrivee1 = Coordonnees {46.760074, -71.319867};
+	Date dateCourtChemin1 = Date { 2016, 10, 5 };
+	Heure heure4 = Heure { 12, 0, 0 };
+	vector<unsigned int> courtChemin1 = gest.plus_court_chemin(dateCourtChemin1, heure4, depart1, arrivee1);
+	cout << courtChemin1.size() << endl;
+	for (unsigned int i = 0; i < courtChemin1.size(); i++)
+	{
+		Station s = gest.getStation(courtChemin1[i]);
+		cout << s.getId() << ": " << s.getNom() << " (" << s.getDescription() << ")" << endl;
+	}
 
 	return 0;
 }

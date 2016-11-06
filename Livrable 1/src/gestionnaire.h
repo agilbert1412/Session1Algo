@@ -81,7 +81,7 @@ private:
 	/** À compléter */
 
 	std::unordered_map<std::string, Ligne> m_lignes;
-	std::unordered_map<int, Station> m_stations;
+	std::unordered_map<unsigned int, Station> m_stations;
 	std::vector<Voyage> m_voyages;
 	std::unordered_map<std::string, std::vector<Voyage*>> m_voyages_date;
 

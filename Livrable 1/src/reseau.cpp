@@ -30,9 +30,9 @@ void Reseau::ajouterSommet(unsigned int numero) throw (std::logic_error){
 		m_nbSommets++;
 	}
 	else if (numero > m_sommets.size()){
-		m_sommets.resize(m_nbSommets + 1, -1);
+		m_sommets.resize(numero + 1, -1);
 		m_sommets[numero] = numero;
-		m_listesAdj.resize(m_nbSommets + 1);
+		m_listesAdj.resize(numero + 1);
 		m_listesAdj[numero] = liste_arcs();
 		m_nbSommets++;
 	}
@@ -161,6 +161,8 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
 	std::vector<std::tuple<bool, unsigned int, int>> vectSoluDistPred;
 	vectSoluDistPred.resize(m_sommets.size());
 
+
+
 	int numTemp = numOrigine;
 	std::pair<unsigned int, unsigned int> numEtCoutProchainNoeudATraiter;
 	bool sommetDestTraite = false;
@@ -189,6 +191,9 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
 		std::get<0>(vectSoluDistPred[numTemp]) = true;
 		if (numTemp == numDest) {
 			sommetDestTraite = true;
+		}
+		if (numEtCoutProchainNoeudATraiter.first == -1 && !sommetDestTraite) {
+			throw std::logic_error("Aucun chemin possible");
 		}
 		numTemp = numEtCoutProchainNoeudATraiter.first;
 	}
@@ -240,7 +245,9 @@ int Reseau::bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vect
 		}
 	}
 
-
+	if (vectDistPred[numDest].second == -1){
+		throw std::logic_error("Aucun chemin possible");
+	}
 	// On retrace le chemin le plus court
 	int numTemp = numDest;
 	while(numTemp != -1){
@@ -308,6 +315,7 @@ int Reseau::getComposantesFortementConnexes(std::vector<std::vector<unsigned int
 	nbSommetTraiter = 0;
 	std::stack<unsigned int>().swap(pileParcoursProfondeur); // Permet de vider la pile
 	std::vector<bool>().swap(sommetsTraites); // Permet de vider le vecteur
+	sommetsTraites.resize(m_sommets.size());
 	while(nbSommetTraiter < m_nbSommets){
 		composantes.push_back(std::vector<unsigned int>());
 
@@ -331,7 +339,7 @@ int Reseau::getComposantesFortementConnexes(std::vector<std::vector<unsigned int
 					if (!sommetsTraites[it.first]){
 						sommetsTraites[it.first] = true;
 						pileParcoursProfondeur.push(it.first);
-						composantes[nbComposantesFortementConnexes].push_back(sommetTemp);
+						composantes[nbComposantesFortementConnexes].push_back(it.first);
 					}
 				}
 		}
