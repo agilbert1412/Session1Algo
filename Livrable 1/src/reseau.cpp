@@ -161,18 +161,16 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
 	std::vector<std::tuple<bool, unsigned int, int>> vectSoluDistPred;
 	vectSoluDistPred.resize(m_sommets.size());
 
-
-
 	int numTemp = numOrigine;
-	std::pair<unsigned int, unsigned int> numEtCoutProchainNoeudATraiter;
+	unsigned int coutTemp;
+	unsigned int indiceSommetAtraiter;
+	std::vector<unsigned int> sommetATraiter;
 	bool sommetDestTraite = false;
 
 	std::fill(vectSoluDistPred.begin(),vectSoluDistPred.end(),std::make_tuple(false,INFINI,-1));
 	std::get<1>(vectSoluDistPred[numOrigine]) = 0;
 
 	while(!sommetDestTraite) {
-		numEtCoutProchainNoeudATraiter.first = -1;
-		numEtCoutProchainNoeudATraiter.second = INFINI;
 		for (auto it : m_listesAdj[numTemp]) {
 			if (!std::get<0>(vectSoluDistPred[it.first])) {
 
@@ -181,9 +179,8 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
 					std::get<2>(vectSoluDistPred[it.first]) =  numTemp;
 				}
 
-				if (numEtCoutProchainNoeudATraiter.second > std::get<1>(vectSoluDistPred[it.first])) {
-					numEtCoutProchainNoeudATraiter.first = it.first;
-					numEtCoutProchainNoeudATraiter.second = std::get<1>(vectSoluDistPred[it.first]);
+				if(std::find(sommetATraiter.begin(), sommetATraiter.end(), it.first) == sommetATraiter.end()) {
+					sommetATraiter.push_back(it.first);
 				}
 			}
 
@@ -192,10 +189,19 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
 		if (numTemp == numDest) {
 			sommetDestTraite = true;
 		}
-		if (numEtCoutProchainNoeudATraiter.first == -1 && !sommetDestTraite) {
+
+		if (sommetATraiter.size() == 0 && !sommetDestTraite) {
 			throw std::logic_error("Aucun chemin possible");
 		}
-		numTemp = numEtCoutProchainNoeudATraiter.first;
+		coutTemp = INFINI;
+		for (unsigned int i = 0; i < sommetATraiter.size(); i++){
+			if (coutTemp > std::get<1>(vectSoluDistPred[sommetATraiter[i]])) {
+				coutTemp = std::get<1>(vectSoluDistPred[sommetATraiter[i]]);
+				indiceSommetAtraiter = i;
+			}
+		}
+		numTemp = sommetATraiter[indiceSommetAtraiter];
+		sommetATraiter.erase(sommetATraiter.begin() + indiceSommetAtraiter);
 	}
 
 	// On retrace le chemin le plus court

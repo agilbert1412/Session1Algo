@@ -71,13 +71,13 @@ public:
 
 	std::vector< unsigned int > plus_court_chemin(Date date, Heure heure_depart, Coordonnees depart, Coordonnees destination);
 
+private:
 
 	Reseau m_reseau;
 
 	void initialiser_reseau(Date date, Heure heure_depart, Heure heure_fin, Coordonnees depart, Coordonnees dest,
 			double dist_de_marche=distance_max_initiale, double dist_transfert=distance_max_transfert);
 
-private:
 	/** À compléter */
 
 	std::unordered_map<std::string, Ligne> m_lignes;

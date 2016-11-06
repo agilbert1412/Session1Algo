@@ -22,12 +22,7 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 {
 	try
 	{
-		clock_t clkStart { };
-		clock_t clkEnd { };
-		double timePassed { };
 		{
-			clkStart = clock();
-			cout << "0" << endl;
 			unordered_map<string, string> mapLignesIds;
 			{
 				vector<vector<string>> resultsRoutes;
@@ -39,10 +34,6 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 					mapLignesIds.insert(make_pair(resultsRoutes[i][0], resultsRoutes[i][2]));
 				}
 			}
-			clkEnd = clock();
-			timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
-			cout << "1: " << timePassed << endl;
-			clkStart = clock();
 			std::unordered_map<string, vector<Arret>> mapVoyageArrets;
 			unordered_map<unsigned int, vector<string>> mapStationVoyage;
 			{
@@ -63,10 +54,6 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 					}
 				}
 			}
-			clkEnd = clock();
-			timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
-			cout << "2: " << timePassed << endl;
-			clkStart = clock();
 			std::unordered_map<std::string, Voyage*> mapVoyage;
 			{
 				vector<vector<string>> resultsTrips;
@@ -86,14 +73,12 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 					m_voyages.push_back(*voy);
 				}
 			}
-			clkEnd = clock();
-			timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
-			cout << "3: " << timePassed << endl;
-			clkStart = clock();
 			{
 				vector<vector<string>> resultsStops;
 				lireFichier(chemin_dossier + stopsFile, resultsStops, delimiter, true);
 				for (unsigned int i = 0; i < resultsStops.size(); i++)	{
+					enlever_guillemets(resultsStops[i][1]);
+					enlever_guillemets(resultsStops[i][2]);
 					Station stat = Station(resultsStops[i]);
 					vector<string> voyagesDeLaStation = mapStationVoyage[stat.getId()];
 					for (int j = 0; j < voyagesDeLaStation.size(); j++)
@@ -104,10 +89,6 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 				}
 			}
 		}
-		clkEnd = clock();
-		timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
-		cout << "4: " << timePassed << endl;
-		clkStart = clock();
 		{
 			vector<vector<string>> resultsCalendarDates;
 			lireFichier(chemin_dossier + calendarDatesFile, resultsCalendarDates, delimiter, true);
@@ -125,11 +106,7 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 			}
 		}
 
-		clkEnd = clock();
-		timePassed = (double)(clkEnd - clkStart) / CLOCKS_PER_SEC;
-		cout << "5: " << timePassed << endl;
-
-		sort(m_voyages.begin(), m_voyages.end());
+		//sort(m_voyages.begin(), m_voyages.end());
 	}
 	catch (char const* msg)
 	{
@@ -145,7 +122,6 @@ Gestionnaire::Gestionnaire(string chemin_dossier)
 bool Gestionnaire::date_est_prise_en_charge(const Date& date)
 {
 	string dateString = to_string(date.getAn()) + string(2 - to_string(date.getMois()).length(), '0').append(to_string(date.getMois())) + string(2 - to_string(date.getJour()).length(), '0').append(to_string(date.getJour()));
-
 	return (m_voyages_date.find(dateString) != m_voyages_date.end());
 }
 
@@ -154,7 +130,6 @@ void Gestionnaire::enlever_guillemets(string & champ)
 	if (champ.front() == '"')
 		if (champ.back() == '"')
 			champ = champ.substr(1, champ.length() - 2);
-	//return champ;
 }
 
 /*!
@@ -314,6 +289,14 @@ vector<pair<double, Station*>> Gestionnaire::trouver_stations_environnantes(Coor
 	return vectResult;
 }
 
+struct comparerHeures
+{
+    inline bool operator() (const pair<double, Station*>& p_heure1, const pair<double, Station*>& p_heure2)
+    {
+        return (p_heure1 < p_heure2);
+    }
+};
+
 /*!
 * \brief trouver l'horaire d'un bus à une station
 * \param date: la date d'intérêt
@@ -365,6 +348,7 @@ numero_ligne, int station_id, string destination)
 			}
 		}
 	}
+	sort(horaire.begin(), horaire.end());
 	return horaire;
 }
 
@@ -445,8 +429,6 @@ Coordonnees depart, Coordonnees dest, double dist_de_marche, double dist_transfe
 			{
 				if (i.first != j.first)
 				{
-					if (i.first == 1515 && j.first == 1787)
-						cout << "now" << endl;
 					double distance = abs(i.second.distance(j.second));
 					if (distance < dist_transfert)
 					{
@@ -466,15 +448,6 @@ Coordonnees depart, Coordonnees dest, double dist_de_marche, double dist_transfe
 
 	for (unsigned int i = 0; i < voyagesCeJourLa.size(); i++)
 	{
-		//cout << voyagesCeJourLa[i]->getLigne()->getNumero() << endl;;
-		if ((voyagesCeJourLa[i]->getLigne()->getNumero() == "800" || voyagesCeJourLa[i]->getLigne()->getNumero() == "801") && voyagesCeJourLa[i]->getHeureDepart() > heure_depart)
-		{
-			cout << "normal: " << i << " en direction de " << voyagesCeJourLa[i]->getDestination() << " à " << voyagesCeJourLa[i]->getHeureDepart() << endl;
-		}
-	}
-
-	for (unsigned int i = 0; i < voyagesCeJourLa.size(); i++)
-	{
 		vector<Arret> arrets = voyagesCeJourLa[i]->getArrets();
 		for (unsigned int j = 1; j < arrets.size(); j++)
 		{
@@ -482,11 +455,6 @@ Coordonnees depart, Coordonnees dest, double dist_de_marche, double dist_transfe
 			int Id2 = arrets[j].getStationId();
 			if (arrets[j - 1].getHeureDepart() > heure_depart && arrets[j].getHeureArrivee() < heure_fin)
 			{
-				if ((voyagesCeJourLa[i]->getLigne()->getNumero() == "800" || voyagesCeJourLa[i]->getLigne()->getNumero() == "801") && voyagesCeJourLa[i]->getHeureDepart() > heure_depart)
-				{
-					cout << "special: " << i << " en direction de " << voyagesCeJourLa[i]->getDestination() << " à " << voyagesCeJourLa[i]->getHeureDepart() << endl;
-					cout << "Arrets: " << Id1 << " - " << Id2 << endl;
-				}
 				//int distance = abs(m_stations.at(arrets[j].getStationId()).distance(m_stations.at(arrets[j - 1].getStationId())));
 				int temps = (arrets[j].getHeureArrivee() - arrets[j - 1].getHeureDepart());
 				if (m_reseau.arcExiste(Id1, Id2))
@@ -574,21 +542,8 @@ Coordonnees depart, Coordonnees destination)
 	double distance_initiale = distance_max_initiale;
 	Heure maxHeure = Heure { 29, 59, 59 };
 	initialiser_reseau(date, heure_depart, maxHeure, depart, destination, distance_initiale, distance_transfert);
-	cout << "0: " << m_reseau.getCoutArc(0, 1515) << endl;
-	cout << "1515: " << m_reseau.getCoutArc(1515, 1787) << endl;
-	cout << "1787: " << m_reseau.getCoutArc(1787, 1776) << endl;
-	cout << "1776: " << m_reseau.getCoutArc(1776, 1790) << endl;
-	cout << "1790: " << m_reseau.getCoutArc(1790, 1791) << endl;
-	cout << "1791: " << m_reseau.getCoutArc(1791, 2000) << endl;
-	cout << "2000: " << m_reseau.getCoutArc(2000, 2001) << endl;
-	cout << "2001: " << m_reseau.getCoutArc(2001, 2003) << endl;
-	cout << "2003: " << m_reseau.getCoutArc(2003, 2006) << endl;
-	cout << "2006: " << m_reseau.getCoutArc(2006, 1434) << endl;
-	cout << "1434: " << m_reseau.getCoutArc(1434, 2007) << endl;
-	cout << "2007: " << m_reseau.getCoutArc(2007, 4144) << endl;
-	cout << "4144: " << m_reseau.getCoutArc(4144, 3099) << endl;
-	cout << "3099: " << m_reseau.getCoutArc(3099, 1) << endl;
 	vector<unsigned int> resultat;
-	m_reseau.dijkstra(num_depart, num_dest, resultat);
+	cout << "Recherche du plus court chemin..." << endl;
+	int coutTotal = m_reseau.dijkstra(num_depart, num_dest, resultat);
 	return resultat;
 }
