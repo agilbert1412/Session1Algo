@@ -3,8 +3,15 @@
 //
 
 #include <iostream>
-#include <unordered_map>
+#include <stdexcept>
+#include <string>
 #include <vector>
+#include <stack>
+#include <queue>
+#include <new>
+#include <limits>
+#include <algorithm>
+#include "station.h"
 
 #ifndef Reseau__H
 #define Reseau__H
@@ -15,7 +22,7 @@
 /*!
  *
  */
-typedef std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int>> liste_arcs;
+typedef std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int> > liste_arcs;
 
 
 /*!
@@ -48,17 +55,20 @@ public:
 
 	int dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
 				throw (std::logic_error);
+	int meilleurPlusCourtChemin(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
+				throw (std::logic_error);
 	int bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
 				throw (std::logic_error);
-	bool estFortementConnexe() const;
-	int getComposantesFortementConnexes(std::vector<std::vector<unsigned int> > & composantes) const;
 
 private:
+	/**< Le nombre de sommets dans le Reseau */
+	int nbSommets;
 
-	size_t m_nbSommets;
-	size_t m_nbArcs;
-	std::vector<int> m_sommets;
-	std::vector<liste_arcs> m_listesAdj;
+	/**< Le nombre d'arcs dans le Reseau */
+	int nbArcs;
+
+    /** Ce vector agira comme une table de hachage contenant les arcs d'un sommet avec son numero associé */
+	std::unordered_map<unsigned int, liste_arcs > m_arcs;
 
 };
 
