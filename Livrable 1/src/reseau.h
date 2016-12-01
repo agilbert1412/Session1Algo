@@ -59,6 +59,8 @@ public:
 				throw (std::logic_error);
 	int bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
 				throw (std::logic_error);
+	int floydwarshall(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
+					throw (std::logic_error);
 
 private:
 	/**< Le nombre de sommets dans le Reseau */

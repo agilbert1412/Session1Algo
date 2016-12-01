@@ -29,6 +29,8 @@ GestionnaireInvestigation::GestionnaireInvestigation(std::string chemin_dossier)
 	std::vector<std::vector<std::string> > temp;
 	unsigned int id;
 
+	std::cout << "Chargement des données..." << std::endl;
+
 	clock_t begin = clock();
 	lireFichier(chemin_dossier+"/routes.txt", temp, ',', true);
 	for(const std::vector<std::string>& ligne_gtfs: temp)
@@ -91,10 +93,10 @@ GestionnaireInvestigation::GestionnaireInvestigation(std::string chemin_dossier)
 	std::cout << "Chargement des données terminé en " << double(end - begin) / CLOCKS_PER_SEC << " secondes" << std::endl;
 
 	begin = clock();
-	std::cout << "Initialisation du réseau ...." << std::endl;
+	std::cout << "Initialisation du réseau..." << std::endl;
 	initialiser_reseau();
 	end = clock();
-	std::cout << "Chargement des données terminé en " << double(end - begin) / CLOCKS_PER_SEC << " secondes" << std::endl;
+	std::cout << "Réseau initialisé en " << double(end - begin) / CLOCKS_PER_SEC << " secondes" << std::endl;
 
 }
 
@@ -215,7 +217,6 @@ double GestionnaireInvestigation::tester_n_paires_bellman(unsigned int nb_paires
 		int k = rand() % v.size();
 		int j = rand() % v.size();
 
-
 		if (gettimeofday(&tv1, 0) != 0)
 				throw std::logic_error("gettimeofday() a échoué");
 
@@ -228,6 +229,48 @@ double GestionnaireInvestigation::tester_n_paires_bellman(unsigned int nb_paires
 		//std::cout << i << ": " << tempsExecution(tv1, tv2) << std::endl;
 		i++;
 	}
+
+
+	return total/(1.0*nb_paires);
+}
+
+/*!
+ * Mesurer le temps d'exécution moyen de l'algorithme Floyd-Warshall sur toutes les paires de stations du réseau de la RTC
+ * return un réel représentant le temps moyen de l'algorithme en microsecondes
+ */
+double GestionnaireInvestigation::tester_n_paires_floyd(unsigned int nb_paires, unsigned int seed){
+	/* initialize random seed: */
+	srand (seed);
+	double total = 0;
+	unsigned int i =0;
+
+	std::vector<unsigned int > v;
+
+	for(auto st1: stations){
+		v.push_back(st1.first);
+	}
+
+
+	while(i < nb_paires){
+		std::cout << "Paire #" << (i + 1) << std::endl;
+		timeval tv1, tv2;
+		int k = rand() % v.size();
+		int j = rand() % v.size();
+
+		if (gettimeofday(&tv1, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+
+		std::vector<unsigned int> chemin;
+		m_reseau.floydwarshall(v[j], v[k], chemin);
+
+		if (gettimeofday(&tv2, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+		total = total + tempsExecution(tv1, tv2);
+		//std::cout << i << ": " << tempsExecution(tv1, tv2) << std::endl;
+		i++;
+	}
+
+
 	return total/(1.0*nb_paires);
 }
 

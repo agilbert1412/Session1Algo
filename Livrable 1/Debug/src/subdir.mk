@@ -4,31 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/auxiliaires.cpp \
-../src/coordonnees.cpp \
-../src/gestionnaire.cpp \
+../src/investigation.cpp \
 ../src/main.cpp \
-../src/reseau.cpp \
-../src/station.cpp \
-../src/voyage.cpp 
+../src/reseau.cpp 
 
 OBJS += \
-./src/auxiliaires.o \
-./src/coordonnees.o \
-./src/gestionnaire.o \
+./src/investigation.o \
 ./src/main.o \
-./src/reseau.o \
-./src/station.o \
-./src/voyage.o 
+./src/reseau.o 
 
 CPP_DEPS += \
-./src/auxiliaires.d \
-./src/coordonnees.d \
-./src/gestionnaire.d \
+./src/investigation.d \
 ./src/main.d \
-./src/reseau.d \
-./src/station.d \
-./src/voyage.d 
+./src/reseau.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

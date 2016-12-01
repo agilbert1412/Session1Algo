@@ -1,5 +1,7 @@
 #include "reseau.h"
 
+using namespace std;
+
 /*!
  * \brief constructeur par défaut d'un réseau. Crée un réseau vide.
  *
@@ -53,8 +55,11 @@ bool Reseau::sommetExiste(unsigned int numero) const
  */
 bool Reseau::arcExiste(unsigned int numOrigine, unsigned int numDest) const throw (std::logic_error)
 {
-    if (!(sommetExiste(numOrigine) && sommetExiste(numDest)))
+    if (!(sommetExiste(numOrigine) && sommetExiste(numDest))) {
+    	cout << "Sommets n'existant pas: " << numOrigine << ", " << numDest << endl;
     	throw std::logic_error ("arcExiste: Un des sommets n'existe pas!");
+    }
+	//cout << "Sommets existants: " << numOrigine << ", " << numDest << endl;
     return m_arcs.find(numOrigine)->second.count(numDest) != 0;
 }
 
@@ -252,6 +257,7 @@ int Reseau::meilleurPlusCourtChemin(unsigned int numOrigine, unsigned int numDes
 int Reseau::bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin) throw (std::logic_error)
 {
     if ( !sommetExiste(numOrigine) || !sommetExiste(numDest) ) throw std::logic_error ("bellmanFord: Un des sommets n'existe pas!");
+
     unsigned int noeud_courant;
     int temp;
     std::unordered_map<unsigned int, int> distances;
@@ -281,16 +287,97 @@ int Reseau::bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vect
     	}
     }
     chemin.clear();
+
     if(predecesseurs[numDest] != -1){
     	std::vector<unsigned int> chemin_inverse;
 		int courant = numDest;
+		int cpt = 0;
 		while(courant!=-1){
 			chemin_inverse.push_back(courant);
 			courant = predecesseurs[courant];
 		}
+
 		for(int i=chemin_inverse.size() -1; i >= 0; i--){
 			chemin.push_back(chemin_inverse[i]);
 		}
     }
+
     return distances[numDest];
 }
+
+
+/*!
+ * \brief Algorithme de Floyd-Warshall en Θ(n³)  permettant de trouver le plus court chemin entre deux noeuds du graphe
+ * \param[in] numOrigine: le sommet d'où le chemin part
+ * \param[in] numDest: le sommet que le chemin est censé atteindre
+ * \param[out] chemin:  le vecteur contenant le chemin trouvé s'il y en existe un
+ * \exception logic_error si un des sommets n'existe pas
+ * \return la longueur du chemin (= numeric_limits<int>::max() si p_destination n'est pas atteignable)
+ */
+int Reseau::floydwarshall(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin) throw (std::logic_error)
+{
+    if ( !sommetExiste(numOrigine) || !sommetExiste(numDest) ) throw std::logic_error ("Floyd-Warshall: Un des sommets n'existe pas!");
+
+	unordered_map<unsigned int, unordered_map<unsigned int, int>> D;
+	unordered_map<unsigned int, unordered_map<unsigned int, unsigned int>> P;
+
+	int nbIterations = m_arcs.size();
+
+	//cout << "Avant première boucle (" << (nbIterations * nbIterations) << " itérations)" << endl;
+	for(auto kv1: m_arcs){
+    	unordered_map<unsigned int, int> map1;
+    	unordered_map<unsigned int, unsigned int> map2;
+    	//cout << "test2: " << kv1.first << endl;
+		for(auto kv2: m_arcs){
+    		if (arcExiste(kv1.first, kv2.first)) {
+    			map1.insert(make_pair(kv2.first, getCoutArc(kv1.first, kv2.first)));
+    		} else {
+    			map1.insert(make_pair(kv2.first, numeric_limits<int>::max()));
+    		}
+
+    		if (kv1.first != kv2.first && map1[kv2.first] != numeric_limits<int>::max()) {
+    			map2.insert(make_pair(kv2.first, kv1.first));
+    		} else {
+    			map2.insert(make_pair(kv2.first, 0));
+    		}
+    	}
+		D.insert(make_pair(kv1.first, map1));
+		P.insert(make_pair(kv1.first, map2));
+    }
+
+	//cout << "Entre les boucles (" << (nbIterations * nbIterations * nbIterations) << " itérations)" << endl;
+	int cpt = 1;
+	for(auto kv3: m_arcs){
+    	for(auto kv1: m_arcs){
+    		for(auto kv2: m_arcs){
+    			cpt++;
+    			//cout << "Itération " << cpt << " sur " << (nbIterations * nbIterations * nbIterations) << endl;
+    			int temp = D[kv1.first][kv3.first] + D[kv3.first][kv2.first];
+    			if (temp < D[kv1.first][kv2.first]) {
+    				D[kv1.first][kv2.first] = temp;
+    				P[kv1.first][kv2.first] = P[kv3.first][kv2.first];
+    			}
+    		}
+    	}
+    }
+
+	//cout << "Chemin final" << endl;
+    chemin.clear();
+
+    if(P[numOrigine][numDest] != 0){
+    	std::vector<unsigned int> chemin_inverse;
+		int courant = numDest;
+		while(courant != 0){
+			chemin_inverse.push_back(courant);
+			courant = P[numOrigine][courant];
+		}
+
+		for(int i=chemin_inverse.size() -1; i >= 0; i--){
+			chemin.push_back(chemin_inverse[i]);
+		}
+    }
+
+	//cout << "Fini Floyd" << endl;
+    return D[numOrigine][numDest];
+}
+

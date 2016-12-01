@@ -1,19 +1,19 @@
-src/main.o: ../src/main.cpp ../src/arret.h ../src/auxiliaires.h \
- ../src/coordonnees.h ../src/ligne.h ../src/voyage.h ../src/station.h \
- ../src/reseau.h ../src/gestionnaire.h
-
-../src/arret.h:
-
-../src/auxiliaires.h:
+src/main.o: ../src/main.cpp ../src/coordonnees.h ../src/reseau.h \
+ ../src/station.h ../src/ligne.h ../src/voyage.h ../src/arret.h \
+ ../src/auxiliaires.h ../src/investigation.h
 
 ../src/coordonnees.h:
+
+../src/reseau.h:
+
+../src/station.h:
 
 ../src/ligne.h:
 
 ../src/voyage.h:
 
-../src/station.h:
+../src/arret.h:
 
-../src/reseau.h:
+../src/auxiliaires.h:
 
-../src/gestionnaire.h:
+../src/investigation.h:
