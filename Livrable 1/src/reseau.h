@@ -24,7 +24,6 @@
  */
 typedef std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int> > liste_arcs;
 
-
 /*!
  * \class Reseau
  * \brief Classe réprésentant un graphe orienté valué. Les sommets du graphe sont tous identifiés par des nombres entiers positifs distincts.
@@ -60,7 +59,16 @@ public:
 	int bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
 				throw (std::logic_error);
 	int floydwarshall(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
-					throw (std::logic_error);
+				throw (std::logic_error);
+	double getDistanceStations(unsigned int station1, unsigned int station2, std::unordered_map<unsigned int, Station> *stations);
+	void reconstruireCheminAStar(std::unordered_map<unsigned int, int> predecesseurs, unsigned int noeud_courant, std::vector<unsigned int> & chemin);
+	int heuristicEstimate(unsigned int numOrigine, unsigned int numDest, std::unordered_map<unsigned int, Station> *stations);
+	int aStar(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin, std::unordered_map<unsigned int, Station> *stations)
+				throw (std::logic_error);
+	bool bellmanFordGrapheAcycle(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin, int cout)
+				throw (std::logic_error);
+	int dijkstraAvecMonceau(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin)
+				throw (std::logic_error);
 
 private:
 	/**< Le nombre de sommets dans le Reseau */
@@ -71,6 +79,8 @@ private:
 
     /** Ce vector agira comme une table de hachage contenant les arcs d'un sommet avec son numero associé */
 	std::unordered_map<unsigned int, liste_arcs > m_arcs;
+
+	bool TriTopologique(std::vector<unsigned int> & sommetsTries);
 
 };
 

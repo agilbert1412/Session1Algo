@@ -125,12 +125,13 @@ std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_dijsktra(
 			throw std::logic_error("gettimeofday() a échoué");
 
 	std::vector<unsigned int> chemin;
-	m_reseau.dijkstra(num_station_depart, num_station_dest, chemin);
+	int temps = m_reseau.dijkstra(num_station_depart, num_station_dest, chemin);
 
 	if (gettimeofday(&tv2, 0) != 0)
 			throw std::logic_error("gettimeofday() a échoué");
 
-	std::cout << "la fonction s'est terminé en " << tempsExecution(tv1, tv2) << "microsecondes" << std::endl;
+	std::cout << "La fonction Dijsktra s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
 	return chemin;}
 
 /*!
@@ -149,12 +150,122 @@ std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_bellman(u
 			throw std::logic_error("gettimeofday() a échoué");
 
 	std::vector<unsigned int> chemin;
-	m_reseau.bellmanFord(num_station_depart, num_station_dest, chemin);
+	int temps = m_reseau.bellmanFord(num_station_depart, num_station_dest, chemin);
 
 	if (gettimeofday(&tv2, 0) != 0)
 			throw std::logic_error("gettimeofday() a échoué");
 
-	std::cout << "la fonction s'est terminé en " << tempsExecution(tv1, tv2) << "microsecondes" << std::endl;
+	std::cout << "La fonction Bellman-Ford s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
+	return chemin;
+}
+
+/*!
+ * \brief Trouver le plus court chemin en autobus pour aller deux stations A et B
+ * Pour ce faire, il faut initialiser le réseau, puis faire appel à ses routines de plus courts chemin
+ * Cette méthode affiche le temps d'exécution de votre algorithme pour la paire A, B
+ * \param num_station_depart: numéro de la station de départ
+ * \param num_station_dest: numéro de la station de départ
+ * \return Un vecteur contenant les stations du chemin trouvé, le vecteur est vide si aucun chemin n'est disponible
+ */
+std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_floyd(unsigned int num_station_depart, unsigned int num_station_dest)
+{
+	timeval tv1, tv2;
+
+	if (gettimeofday(&tv1, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::vector<unsigned int> chemin;
+	int temps = m_reseau.floydwarshall(num_station_depart, num_station_dest, chemin);
+
+	if (gettimeofday(&tv2, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::cout << "La fonction Floyd-Warshall s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
+	return chemin;
+}
+
+/*!
+ * \brief Trouver le plus court chemin en autobus pour aller deux stations A et B
+ * Pour ce faire, il faut initialiser le réseau, puis faire appel à ses routines de plus courts chemin
+ * Cette méthode affiche le temps d'exécution de votre algorithme pour la paire A, B
+ * \param num_station_depart: numéro de la station de départ
+ * \param num_station_dest: numéro de la station de départ
+ * \return Un vecteur contenant les stations du chemin trouvé, le vecteur est vide si aucun chemin n'est disponible
+ */
+std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_a_star(unsigned int num_station_depart, unsigned int num_station_dest)
+{
+	timeval tv1, tv2;
+
+	if (gettimeofday(&tv1, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::vector<unsigned int> chemin;
+	int temps = m_reseau.aStar(num_station_depart, num_station_dest, chemin, &stations);
+
+	if (gettimeofday(&tv2, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::cout << "La fonction A* s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
+	return chemin;
+}
+
+/*!
+ * \brief Trouver le plus court chemin en autobus pour aller deux stations A et B
+ * Pour ce faire, il faut initialiser le réseau, puis faire appel à ses routines de plus courts chemin
+ * Cette méthode affiche le temps d'exécution de votre algorithme pour la paire A, B
+ * \param num_station_depart: numéro de la station de départ
+ * \param num_station_dest: numéro de la station de départ
+ * \return Un vecteur contenant les stations du chemin trouvé, le vecteur est vide si aucun chemin n'est disponible
+ */
+std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_bellman_acyclique(unsigned int num_station_depart, unsigned int num_station_dest)
+{
+	timeval tv1, tv2;
+
+	if (gettimeofday(&tv1, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::vector<unsigned int> chemin;
+	int temps;
+	bool result = m_reseau.bellmanFordGrapheAcycle(num_station_depart, num_station_dest, chemin, temps);
+
+	if (!result) {
+		throw std::logic_error("Le graphe contient un cycle");
+	}
+
+	if (gettimeofday(&tv2, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::cout << "La fonction Bellman-Ford pour graphe acyclique s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
+	return chemin;
+}
+
+/*!
+ * \brief Trouver le plus court chemin en autobus pour aller deux stations A et B
+ * Pour ce faire, il faut initialiser le réseau, puis faire appel à ses routines de plus courts chemin
+ * Cette méthode affiche le temps d'exécution de votre algorithme pour la paire A, B
+ * \param num_station_depart: numéro de la station de départ
+ * \param num_station_dest: numéro de la station de départ
+ * \return Un vecteur contenant les stations du chemin trouvé, le vecteur est vide si aucun chemin n'est disponible
+ */
+std::vector<unsigned int> GestionnaireInvestigation::plus_court_chemin_dijsktra_monceau(unsigned int num_station_depart, unsigned int num_station_dest)
+{
+	timeval tv1, tv2;
+
+	if (gettimeofday(&tv1, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::vector<unsigned int> chemin;
+	int temps = m_reseau.dijkstraAvecMonceau(num_station_depart, num_station_dest, chemin);
+
+	if (gettimeofday(&tv2, 0) != 0)
+			throw std::logic_error("gettimeofday() a échoué");
+
+	std::cout << "La fonction Dijsktra avec monceau s'est terminé en " << tempsExecution(tv1, tv2) << " microsecondes" << std::endl;
+	std::cout << "La solution prend " << temps << " secondes pour atteindre la destination" << std::endl;
 	return chemin;
 }
 
@@ -271,6 +382,125 @@ double GestionnaireInvestigation::tester_n_paires_floyd(unsigned int nb_paires, 
 	}
 
 
+	return total/(1.0*nb_paires);
+}
+
+/*!
+ * Mesurer le temps d'exécution moyen de l'algorithme A* sur toutes les paires de stations du réseau de la RTC
+ * return un réel représentant le temps moyen de l'algorithme en microsecondes
+ */
+double GestionnaireInvestigation::tester_n_paires_a_star(unsigned int nb_paires, unsigned int seed){
+	/* initialize random seed: */
+	srand (seed);
+	double total = 0;
+	unsigned int i =0;
+
+	std::vector<unsigned int > v;
+
+	for(auto st1: stations){
+		v.push_back(st1.first);
+	}
+
+
+	while(i < nb_paires){
+		//std::cout << "Paire #" << (i + 1) << std::endl;
+		timeval tv1, tv2;
+		int k = rand() % v.size();
+		int j = rand() % v.size();
+
+		if (gettimeofday(&tv1, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+
+		std::vector<unsigned int> chemin;
+
+		m_reseau.aStar(v[j], v[k], chemin, &stations);
+
+		if (gettimeofday(&tv2, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+		total = total + tempsExecution(tv1, tv2);
+		//std::cout << i << ": " << tempsExecution(tv1, tv2) << std::endl;
+		i++;
+	}
+
+
+	return total/(1.0*nb_paires);
+}
+
+/*!
+ * Mesurer le temps d'exécution moyen de l'algorithme bellmanFord pour les graphes acycliques sur toutes les paires de stations du réseau de la RTC
+ * return un booléen qui permet de savoir si le graphe est acyclique ou pas
+ */
+double GestionnaireInvestigation::tester_n_paires_bellman_acyclique(unsigned int nb_paires, unsigned int seed){
+	/* initialize random seed: */
+	srand (seed);
+	double total = 0;
+	unsigned int i =0;
+	int cout;
+
+	std::vector<unsigned int > v;
+
+	for(auto st1: stations){
+		v.push_back(st1.first);
+	}
+
+
+	while(i < nb_paires){
+		timeval tv1, tv2;
+		int k = rand() % v.size();
+		int j = rand() % v.size();
+
+
+		if (gettimeofday(&tv1, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+
+		std::vector<unsigned int> chemin;
+
+		if (!m_reseau.bellmanFordGrapheAcycle(v[j], v[k], chemin, cout)){
+			return -1;
+		}
+
+		if (gettimeofday(&tv2, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+		total = total + tempsExecution(tv1, tv2);
+		//std::cout << i << ": " << tempsExecution(tv1, tv2) << std::endl;
+		i++;
+	}
+	return total/(1.0*nb_paires);
+}
+
+/*!
+ * Mesurer le temps d'exécution moyen de l'algorithme dijsktra utilisant un monceau pour les noeuds non solutionnés sur toutes les paires de stations du réseau de la RTC
+ * return un réel représentant le temps moyen de l'algorithme en microsecondes
+ */
+double GestionnaireInvestigation::tester_n_paires_dijsktra_monceau(unsigned int nb_paires, unsigned int seed){
+	/* initialize random seed: */
+	srand (seed);
+	double total = 0;
+	unsigned int i =0;
+
+	std::vector<unsigned int > v;
+
+	for(auto st1: stations){
+		v.push_back(st1.first);
+	}
+
+	while(i < nb_paires){
+		timeval tv1, tv2;
+		int k = rand() % v.size();
+		int j = rand() % v.size();
+
+
+		if (gettimeofday(&tv1, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+
+		std::vector<unsigned int> chemin;
+		m_reseau.dijkstraAvecMonceau(v[j], v[k], chemin);
+
+		if (gettimeofday(&tv2, 0) != 0)
+				throw std::logic_error("gettimeofday() a échoué");
+		total = total + tempsExecution(tv1, tv2);
+		i++;
+	}
 	return total/(1.0*nb_paires);
 }
 

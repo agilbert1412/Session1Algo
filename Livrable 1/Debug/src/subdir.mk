@@ -6,17 +6,20 @@
 CPP_SRCS += \
 ../src/investigation.cpp \
 ../src/main.cpp \
-../src/reseau.cpp 
+../src/reseau.cpp \
+../src/tas.cpp 
 
 OBJS += \
 ./src/investigation.o \
 ./src/main.o \
-./src/reseau.o 
+./src/reseau.o \
+./src/tas.o 
 
 CPP_DEPS += \
 ./src/investigation.d \
 ./src/main.d \
-./src/reseau.d 
+./src/reseau.d \
+./src/tas.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

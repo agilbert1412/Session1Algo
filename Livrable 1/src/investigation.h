@@ -37,9 +37,16 @@ public:
 	bool station_existe(int station_id);
 	std::vector< unsigned int > plus_court_chemin_dijsktra(unsigned int num_station_depart, unsigned int num_station_dest);
 	std::vector< unsigned int > plus_court_chemin_bellman(unsigned int num_station_depart, unsigned int num_station_dest);
+	std::vector< unsigned int > plus_court_chemin_floyd(unsigned int num_station_depart, unsigned int num_station_dest);
+	std::vector< unsigned int > plus_court_chemin_a_star(unsigned int num_station_depart, unsigned int num_station_dest);
+	std::vector< unsigned int > plus_court_chemin_bellman_acyclique(unsigned int num_station_depart, unsigned int num_station_dest);
+	std::vector< unsigned int > plus_court_chemin_dijsktra_monceau(unsigned int num_station_depart, unsigned int num_station_dest);
 	double tester_n_paires_dijsktra(unsigned int nb_paires, unsigned int seed=42);
 	double tester_n_paires_bellman(unsigned int nb_paires, unsigned int seed=42);
 	double tester_n_paires_floyd(unsigned int nb_paires, unsigned int seed=42);
+	double tester_n_paires_a_star(unsigned int nb_paires, unsigned int seed=42);
+	double tester_n_paires_bellman_acyclique(unsigned int nb_paires, unsigned int seed=42);
+	double tester_n_paires_dijsktra_monceau(unsigned int nb_paires, unsigned int seed=42);
 
 private:
 	std::unordered_map<std::string, Ligne> lignes;
