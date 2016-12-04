@@ -16,3 +16,5 @@ int main() {
     cout << "Temps moyen de bellman " << rtc.tester_n_paires_bellman(1000) << endl;
     return 0;
 }
+
+2858 2876 2886 2887 2929 2764
