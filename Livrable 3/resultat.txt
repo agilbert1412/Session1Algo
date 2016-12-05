@@ -1,0 +1,400 @@
+Résultat du test numéro 1 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1551.565777 secondes.
+Temps moyen de Dijsktra: 1.551566 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 636.545959 secondes.
+Temps moyen de Bellman: 0.636546 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 113.019096 secondes.
+Temps moyen de A*: 0.113019 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 39.177880 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.039178 secondes.
+
+
+
+Résultat du test numéro 2 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1513.688570 secondes.
+Temps moyen de Dijsktra: 1.513689 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 628.367805 secondes.
+Temps moyen de Bellman: 0.628368 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 112.220657 secondes.
+Temps moyen de A*: 0.112221 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 38.959443 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.038959 secondes.
+
+
+
+Résultat du test numéro 3 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1532.705488 secondes.
+Temps moyen de Dijsktra: 1.532705 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 632.664152 secondes.
+Temps moyen de Bellman: 0.632664 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 111.847314 secondes.
+Temps moyen de A*: 0.111847 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 38.995468 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.038995 secondes.
+
+
+
+Résultat du test numéro 4 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1507.150621 secondes.
+Temps moyen de Dijsktra: 1.507151 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 633.012750 secondes.
+Temps moyen de Bellman: 0.633013 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 113.321972 secondes.
+Temps moyen de A*: 0.113322 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 39.452386 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.039452 secondes.
+
+
+
+Résultat du test numéro 5 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1501.893537 secondes.
+Temps moyen de Dijsktra: 1.501894 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 605.970276 secondes.
+Temps moyen de Bellman: 0.605970 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 104.085826 secondes.
+Temps moyen de A*: 0.104086 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 35.846197 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.035846 secondes.
+
+
+
+Résultat du test numéro 6 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1331.165604 secondes.
+Temps moyen de Dijsktra: 1.331166 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 624.306706 secondes.
+Temps moyen de Bellman: 0.624307 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 114.249915 secondes.
+Temps moyen de A*: 0.114250 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 40.055800 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.040056 secondes.
+
+
+
+Résultat du test numéro 7 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1541.910884 secondes.
+Temps moyen de Dijsktra: 1.541911 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 639.332729 secondes.
+Temps moyen de Bellman: 0.639333 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 114.595064 secondes.
+Temps moyen de A*: 0.114595 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 39.743830 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.039744 secondes.
+
+
+
+Résultat du test numéro 8 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1574.282610 secondes.
+Temps moyen de Dijsktra: 1.574283 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 637.947780 secondes.
+Temps moyen de Bellman: 0.637948 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 113.674872 secondes.
+Temps moyen de A*: 0.113675 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 39.607040 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.039607 secondes.
+
+
+
+Résultat du test numéro 9 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1451.051988 secondes.
+Temps moyen de Dijsktra: 1.451052 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 461.752434 secondes.
+Temps moyen de Bellman: 0.461752 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.996137 secondes.
+Temps moyen de A*: 0.090996 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.538916 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030539 secondes.
+
+
+
+Résultat du test numéro 10 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1268.509749 secondes.
+Temps moyen de Dijsktra: 1.268510 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 437.075132 secondes.
+Temps moyen de Bellman: 0.437075 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.143252 secondes.
+Temps moyen de A*: 0.090143 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.415079 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030415 secondes.
+
+
+
+Résultat du test numéro 11 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1251.800292 secondes.
+Temps moyen de Dijsktra: 1.251800 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 438.628744 secondes.
+Temps moyen de Bellman: 0.438629 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 91.017075 secondes.
+Temps moyen de A*: 0.091017 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.600110 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030600 secondes.
+
+
+
+Résultat du test numéro 12 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1254.477438 secondes.
+Temps moyen de Dijsktra: 1.254477 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 437.707217 secondes.
+Temps moyen de Bellman: 0.437707 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.727011 secondes.
+Temps moyen de A*: 0.090727 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.371799 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030372 secondes.
+
+
+
+Résultat du test numéro 13 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1253.449946 secondes.
+Temps moyen de Dijsktra: 1.253450 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 437.055203 secondes.
+Temps moyen de Bellman: 0.437055 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.649005 secondes.
+Temps moyen de A*: 0.090649 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.358935 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030359 secondes.
+
+
+
+Résultat du test numéro 14 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1255.055964 secondes.
+Temps moyen de Dijsktra: 1.255056 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 436.674770 secondes.
+Temps moyen de Bellman: 0.436675 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.193708 secondes.
+Temps moyen de A*: 0.090194 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.394916 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030395 secondes.
+
+
+
+Résultat du test numéro 15 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1251.545795 secondes.
+Temps moyen de Dijsktra: 1.251546 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 437.028707 secondes.
+Temps moyen de Bellman: 0.437029 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.471553 secondes.
+Temps moyen de A*: 0.090472 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.258743 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030259 secondes.
+
+
+
+Résultat du test numéro 16 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1253.622606 secondes.
+Temps moyen de Dijsktra: 1.253623 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 436.669957 secondes.
+Temps moyen de Bellman: 0.436670 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.520214 secondes.
+Temps moyen de A*: 0.090520 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.525571 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030526 secondes.
+
+
+
+Résultat du test numéro 17 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1253.307023 secondes.
+Temps moyen de Dijsktra: 1.253307 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 436.212511 secondes.
+Temps moyen de Bellman: 0.436213 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.838718 secondes.
+Temps moyen de A*: 0.090839 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.496914 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030497 secondes.
+
+
+
+Résultat du test numéro 18 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1252.624551 secondes.
+Temps moyen de Dijsktra: 1.252625 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 436.808281 secondes.
+Temps moyen de Bellman: 0.436808 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 90.465990 secondes.
+Temps moyen de A*: 0.090466 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 30.418905 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.030419 secondes.
+
+
+
+Résultat du test numéro 19 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1316.968815 secondes.
+Temps moyen de Dijsktra: 1.316969 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 473.411276 secondes.
+Temps moyen de Bellman: 0.473411 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 93.214379 secondes.
+Temps moyen de A*: 0.093214 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 31.491187 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.031491 secondes.
+
+
+
+Résultat du test numéro 20 :
+
+Éxécution de 1000 fois Dijsktra
+Temps pour éxécuter 1000 fois Dijsktra: 1305.974364 secondes.
+Temps moyen de Dijsktra: 1.305974 secondes.
+
+Éxécution de 1000 fois Bellman
+Temps pour éxécuter 1000 fois Bellman: 482.760393 secondes.
+Temps moyen de Bellman: 0.482760 secondes.
+
+Éxécution de 1000 fois A*
+Temps pour éxécuter 1000 fois A*: 95.040837 secondes.
+Temps moyen de A*: 0.095041 secondes.
+
+Éxécution de 1000 fois Dijkstra avec un monceau
+Temps pour éxécuter 1000 fois Dijkstra avec un monceau: 32.502839 secondes.
+Temps moyen de Dijkstra avec un monceau: 0.032503 secondes.
+
+
+
