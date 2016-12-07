@@ -244,8 +244,7 @@ int Reseau::dijkstra(unsigned int numOrigine, unsigned int numDest, std::vector<
  */
 int Reseau::meilleurPlusCourtChemin(unsigned int numOrigine, unsigned int numDest, std::vector<unsigned int> & chemin) throw (std::logic_error)
 {
-    //TODO À completer
-	return 0;
+    return dijkstraAvecMonceau(numOrigine, numDest, chemin);
 }
 
 /*!
@@ -293,7 +292,6 @@ int Reseau::bellmanFord(unsigned int numOrigine, unsigned int numDest, std::vect
     if(predecesseurs[numDest] != -1){
     	std::vector<unsigned int> chemin_inverse;
 		int courant = numDest;
-		int cpt = 0;
 		while(courant!=-1){
 			chemin_inverse.push_back(courant);
 			courant = predecesseurs[courant];
@@ -382,9 +380,6 @@ int Reseau::dijkstraAvecMonceau(unsigned int numOrigine, unsigned int numDest, s
 
     for(auto kv: m_arcs){
     	predecesseurs[kv.first] = -1;
-    	if (kv.first == 6123){
-    			int a = 0;
-    		}
     	if (kv.first == numOrigine) {
     		mapSommets[kv.first] = 0;
     		vecSommets.push_back(std::make_pair(kv.first, 0));
@@ -398,9 +393,6 @@ int Reseau::dijkstraAvecMonceau(unsigned int numOrigine, unsigned int numDest, s
 
     for(int i = 0; i < nbSommets; i++){
     	noeud_min = tasSommets.SupprimerPlusPetit();
-    	if (noeud_min.first == 6123){
-    	    			int a = 0;
-    	    		}
     	mapSommets.erase(noeud_min.first);
     	if(noeud_min.first == numDest){
     		break;
@@ -408,12 +400,9 @@ int Reseau::dijkstraAvecMonceau(unsigned int numOrigine, unsigned int numDest, s
 
     	for(auto voisin: m_arcs[noeud_min.first]){
     		std::unordered_map<unsigned int, int>::iterator it = mapSommets.find(voisin.first);
-    		if(it != mapSommets.end()){
+    		if(it != mapSommets.end()) {
     			temp = voisin.second.first + noeud_min.second;
-    			    if(temp < it->second) {
-    			    	if (it->first == 6123){
-    			    	    	    			int a = 0;
-    			    	    	    		}
+				if(temp < it->second) {
     			    it->second = temp;
     			    predecesseurs[voisin.first] = noeud_min.first;
     			    tasSommets.MAJsommet(it->first, it->second);
@@ -504,8 +493,6 @@ int Reseau::floydwarshall(unsigned int numOrigine, unsigned int numDest, std::ve
 
 	unordered_map<unsigned int, unordered_map<unsigned int, int>> D;
 	unordered_map<unsigned int, unordered_map<unsigned int, unsigned int>> P;
-
-	int nbIterations = m_arcs.size();
 
 	//cout << "Avant première boucle (" << (nbIterations * nbIterations) << " itérations)" << endl;
 	for(auto kv1: m_arcs){
@@ -615,8 +602,6 @@ int Reseau::aStar(unsigned int numOrigine, unsigned int numDest, std::vector<uns
     unordered_map<unsigned int, int> distancesVersSommets;
     unordered_map<unsigned int, int> predecesseurs;
     unordered_map<unsigned int, int> distancesTotalesParSommets;
-
-    int temp;
 
     int max_poids = std::numeric_limits<int>::max();
     for(auto kv: m_arcs) {
